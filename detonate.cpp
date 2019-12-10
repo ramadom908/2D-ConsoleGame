@@ -70,7 +70,7 @@ void Detonate::draw(void)
 		{
 			point.X = X - 1 + x;
 			point.Y = Y - 1 + y;
-			// ist explosion auch nicht auf menü-rand?
+			// there is no explosion either on menu border?
 			if (point.X > 1 && point.X < 78 && point.Y > 2 && point.Y < 23)
 			{
 				SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
@@ -115,7 +115,7 @@ void Detonate::firing(Level* _l_ptr)
 	if (getDelay() == 0)
 	{
 		draw();
-		// auf map eintragen, wo es brennt bei explosion
+		// enter on map, where it burns with explosion
 		if (index < 4)
 		{
 			_l_ptr->map[X - 1][Y - 1][0] = FIRE; _l_ptr->map[X][Y - 1][0] = FIRE; _l_ptr->map[X + 1][Y - 1][0] = FIRE;

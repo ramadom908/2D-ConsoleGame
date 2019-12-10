@@ -32,10 +32,10 @@ void Diamond::move(Level* _l_ptr, int _v)
 {
 	if (_v == RECHTS)
 	{
-		// Nur wenn rechts Leer ist
+		// Only if right is empty
 		if (_l_ptr->map[X + 1][Y][0] == EMPTY)
 		{
-			// index umkopieren
+			// index
 			int i = _l_ptr->map[X][Y][1];
 			_l_ptr->map[X][Y][1] = NULL;
 
@@ -49,16 +49,16 @@ void Diamond::move(Level* _l_ptr, int _v)
 	}
 	else if (_v == LINKS)
 	{
-		// Nur wenn links Leer ist
+		// Only if left is empty
 		if (_l_ptr->map[X - 1][Y][0] == EMPTY)
 		{
-			// index umkopieren
+			// index 
 			int i = _l_ptr->map[X][Y][1];
 			_l_ptr->map[X][Y][1] = NULL;
 
 			_l_ptr->map[X][Y][0] = EMPTY;
 			_l_ptr->draw(X, Y, EMPTY);
-			// Wenn rechts ein stein liegt, stein muss neu gezeichnet werden
+			// If there is a stone on the right, stone must be redrawn
 			if (_l_ptr->map[X + 1][Y][0] == STONE)
 				_l_ptr->draw(X + 1, Y, STONE);
 			else if (_l_ptr->map[X + 1][Y][0] == PLAYER)
@@ -82,7 +82,7 @@ void Diamond::move(Level* _l_ptr, int _v)
 
 			_l_ptr->map[X][Y][0] = EMPTY;
 			_l_ptr->draw(X, Y, EMPTY);
-			// Wenn rechts ein stein liegt, stein muss neu gezeichnet werden
+			// If there is a stone on the right, stone must be redrawn
 			if (_l_ptr->map[X + 1][Y][0] == STONE)
 				_l_ptr->draw(X + 1, Y, STONE);
 			else if (_l_ptr->map[X + 1][Y][0] == PLAYER)

@@ -1,6 +1,6 @@
-// stdafx.h : Includedatei für Standardsystem-Includedateien
-// oder häufig verwendete projektspezifische Includedateien,
-// die nur in unregelmäßigen Abständen geändert werden.
+// stdafx.h : Include file for standard system include files
+// or frequently used project-specific include files
+// which can only be changed at irregular intervals
 //
 #ifndef STDAFX_H
 #define STDAFX_H
@@ -81,5 +81,5 @@ enum color
 };
 
 
-// TODO: Hier auf zusätzliche Header, die das Programm erfordert, verweisen.
+// TODO: Refer here to additional headers that the program requires.
 #endif

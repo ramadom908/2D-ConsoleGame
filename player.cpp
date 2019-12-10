@@ -37,25 +37,25 @@ void Player::init(Level* _l_ptr)
 
 void Player::move(int _v)
 {
-	if (_v == RECHTS)
+	if (_v == RECHTS) // dreapta
 	{
 		//PlaySound(TEXT("walk2.wav"), NULL, SND_ASYNC);
 		X++;
 		draw();
 	}
-	else if (_v == LINKS)
+	else if (_v == LINKS)// stanga
 	{
 		//PlaySound(TEXT("walk2.wav"), NULL, SND_ASYNC);
 		X--;
 		draw();
 	}
-	else if (_v == RUNTER)
+	else if (_v == RUNTER) //jos
 	{
 		//PlaySound(TEXT("walk2.wav"), NULL, SND_ASYNC);
 		Y++;
 		draw();
 	}
-	else if (_v == RAUF)
+	else if (_v == RAUF) //sus
 	{
 		//PlaySound(TEXT("walk2.wav"), NULL, SND_ASYNC);
 		Y--;
@@ -71,7 +71,7 @@ void Player::move(int _v)
 {
 	if (_v == RECHTS)
 	{
-		// Nur wenn rechts Sand oder Leer ist
+		// Only if there is sand or empty on the right
 		if (level_ptr->map[X+1][Y][0] == SAND || level_ptr->map[X+1][Y][0] == EMPTY)
 		{
 			level_ptr->map[X][Y][0] = EMPTY;
@@ -80,7 +80,7 @@ void Player::move(int _v)
 			level_ptr->map[X][Y][0] = PLAYER;
 			draw();
 		}
-		// Spieler schiebt stein
+		// Player pushes stone
 		else if (level_ptr->map[X+1][Y][0] == STONE && level_ptr->map[X+2][Y][0] == EMPTY)
 		{
 			stone_ptr->move(RECHTS);
@@ -88,12 +88,12 @@ void Player::move(int _v)
 	}
 	else if (_v == LINKS)
 	{
-		// Nur wenn links Sand oder Leer ist
+		// Only if left is sand or empty
 		if (level_ptr->map[X-1][Y][0] == SAND || level_ptr->map[X-1][Y][0] == EMPTY)
 		{
 			level_ptr->map[X][Y][0] = EMPTY;
 			level_ptr->draw(X, Y, EMPTY);
-			// Wenn rechts ein stein liegt, stein muss neu gezeichnet werden
+			// If there is a stone on the right, stone must be redrawn
 			if (level_ptr->map[X+1][Y][0] == STONE)
 				level_ptr->draw(X+1, Y, STONE);
 			X--;

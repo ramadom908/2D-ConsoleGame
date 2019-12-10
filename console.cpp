@@ -1,4 +1,4 @@
-// Game.cpp : Definiert den Einstiegspunkt für die Konsolenanwendung.
+// Game.cpp : Defines the entry point for the console application.
 //
 
 #include "stdafx.h"
@@ -16,7 +16,7 @@ DWORD LoopStartTime;
 
 
 
-// Cursor Position setzen
+// Set cursor position
 void gotoxy(int x, int y)
 {
 	COORD point;
@@ -25,7 +25,7 @@ void gotoxy(int x, int y)
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
 }
 
-// Bild löschen, nicht genutzt
+// Clear image, not used        // functie de clearscreen?  nu e folosita?
 void clrscr()
 {
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -44,7 +44,7 @@ void clrscr()
 
 
 
-// Farbe für Schrift
+// Color for writing
 void setColor(int colorBack, int colorFore)
 {
 	int back = 0;
@@ -63,7 +63,7 @@ void setColor(int colorBack, int colorFore)
 }
 
 
-// Text ausdrucken
+// Print text
 void centerText(const char *message, int ypos)
 {
 	int len = strlen(message);
@@ -135,13 +135,13 @@ int main()
 			}
 			player.slowdown();
 		}
-		else player.setDelay(0);  // waiting wird auf 0 gesetzt, wenn spieler richtung ändert (direkte steuerung)
+		else player.setDelay(0);  // waiting is set to 0 if player changes direction (direct control)
 
-		// ToDo: Hier Aufruf von Enemies
+		// ToDo: Here call of Enemies
 //		enemy[0].KI();
 //		enemy[1].KI();
 
-		// ToDo: Spieler Anzeigen
+		// ToDo: Player Show
 //		enemy[0].draw();
 //		enemy[1].draw();
 

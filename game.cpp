@@ -88,14 +88,14 @@ void Game::init(Player* _p_ptr)
 	centerText(1, " Lives", diaVec.size() - curr_diamond, " Diamonds", 49, " Time", 109, " Points", 1);
 }
 
-// Steuerung Enemy
+// Control Enemy
 void Game::ai(void)
 {
 	for (int i = 0; i < enemyVec.size(); i++)
 	{
-		// ist Stein noch nicht kaputt?
+		// Stone is not broken yet?
 		if (!enemyVec[i]->getState())
-		{   // falls links, über, rechts oder unter spieler ist, enemy explodiert
+		{   // if left, over, right or under player, enemy explodes
 			if (level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] == PLAYER ||
 				level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] == PLAYER ||
 				level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] == PLAYER ||
@@ -105,14 +105,14 @@ void Game::ai(void)
 				enemyVec[i]->setState(true);
 				explosion(enemyVec[i]->getX(), enemyVec[i]->getY());
 			}
-			// falls an Enemy stelle brennt, enemy explodiert u. stirbt
+			// if Enemy burns, enemy explodes enemy, enemy explodes u. dies
 			else if (level.map[enemyVec[i]->getX()][enemyVec[i]->getY()][0] == FIRE)
 			{
 				//PlaySound(TEXT("explosion-02.wav"), NULL, SND_ASYNC);
 				enemyVec[i]->setState(true);
 				explosion(enemyVec[i]->getX(), enemyVec[i]->getY());
 			}
-			// wenn über Enemy sich ein stein befindet, Enemy explodiert u. stirbt
+			// if there is a stone over Enemy, Enemy explodes u. dies
 			else if (level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] == STONE)
 			{
 				//PlaySound(TEXT("explosion-02.wav"), NULL, SND_ASYNC);
@@ -235,13 +235,13 @@ void Game::ai(void)
 	}
 }
 
-// Steuerung Steine
+// Stone Control
 void Game::gravity(void)
 {
-	// Steine
+	// Stone
 	for (int i = 0; i < stoneVec.size(); i++)
 	{
-		// ist Stein noch nicht kaputt?
+		// is not stone broken yet?
 		if (!stoneVec[i]->getState())
 		{
 			if (level.map[stoneVec[i]->getX()][stoneVec[i]->getY()][0] == FIRE)
@@ -249,7 +249,7 @@ void Game::gravity(void)
 				stoneVec[i]->setState(true);
 			}
 			else
-			{	// stein fällt
+			{	// stone falls
 				if (stoneVec[i]->getDelay() == 0)
 				{
 					if (level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == EMPTY)
@@ -257,13 +257,13 @@ void Game::gravity(void)
 						stoneVec[i]->move(&level, RUNTER);
 						if (level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == PLAYER)
 						{
-							// Stein kolliediert mit Spieler
+							// Stone collides with player
 							//PlaySound(TEXT("explosion-02.wav"), NULL, SND_ASYNC);
 							explosion(player_ptr->getX(), player_ptr->getY());
 						}
 						else if (level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == ENEMY)
 						{
-							//std::cout << "Stein kollidiert mit Enemy!";
+							//std::cout << "Stone collides with Enemy!";
 							//PlaySound(TEXT("explosion-02.wav"), NULL, SND_ASYNC);
 							explosion(enemyVec[level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][1]]->getX(), enemyVec[level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][1]]->getY());
 						}
@@ -284,7 +284,7 @@ void Game::gravity(void)
 		}
 		///////////////////////////////////////////////
 		// Diamond
-		// ist Diamond noch nicht kaputt?
+		// Diamond is not broken yet?
 		if (diaVec.size() > i)
 		{
 			if (!diaVec[i]->getState())
@@ -301,7 +301,7 @@ void Game::gravity(void)
 					centerText(1, " Lives", diaVec.size() - curr_diamond, " Diamonds", 49, " Time", 109, " Points", 1);
 				}
 				else
-				{	// Diamond fällt
+				{	// Diamond falls
 					if (diaVec[i]->getDelay() == 0)
 					{
 						if (level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == EMPTY)
@@ -314,7 +314,7 @@ void Game::gravity(void)
 							}
 							else if (level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == ENEMY)
 							{
-								//std::cout << "Stein kollidiert mit Enemy!";
+								//std::cout << "Stone collides with Enemy!";
 								//PlaySound(TEXT("explosion-02.wav"), NULL, SND_ASYNC);
 								explosion(enemyVec[level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][1]]->getX(), enemyVec[level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][1]]->getY());
 							}
@@ -339,25 +339,25 @@ void Game::gravity(void)
 
 void Game::update(void)
 {
-	// falls eine explosion gezündet ist
+	// if an explosion is ignited
 	if (explVec.size() > 0)
 	{
 		for (int i = 0; i < explVec.size(); i++)
 		{
 			explVec[i]->firing(&level);
-			// explosion aus Vector löschen nach ende
+			// explosion from Vector delete after end
 			if (explVec[i]->getIndex() > 4)
 				explVec.erase(explVec.begin() + i);
 		}
 	}
-	// wenn spieler brennt/explodiert, spieler stirbt
+	//when player burns/explodes, player dies
 	if (level.map[player_ptr->getX()][player_ptr->getY()][0] == FIRE)
 	{
 		player_ptr->setState(true);
 		setColor(black, 7);
 		centerText("                   GAME OVER                    ", 1);
 	}
-	// spieler gewinnt
+	// player wins
 	else if (diaVec.size() - curr_diamond == 0)
 	{
 		player_ptr->setState(true);
@@ -370,15 +370,15 @@ void Game::update(void)
 
 }
 
-// Steuerung Spieler
+// Control player
 void Game::move(int _v)
 {
-	// ist spieler tot?
+	// is player dead?
 	if (!player_ptr->getState())
 	{
 		if (_v == RECHTS)
 		{
-			// Nur wenn rechts Sand, Diamond oder Leer ist
+			// Only if right is Sand, Diamond or Empty
 			if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == SAND || level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == EMPTY || level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == DIAMOND)
 			{
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = EMPTY;
@@ -386,10 +386,10 @@ void Game::move(int _v)
 				player_ptr->move(RECHTS);
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;
 			}
-			// Spieler schiebt stein
+			// Player pushes stone
 			else if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == STONE && level.map[player_ptr->getX() + 2][player_ptr->getY()][0] == EMPTY)
 			{
-				// Wenn schieben geklappt hat, soll neue position auch im map-index eingefügt werden
+				// If push worked, new position should also be inserted in the map index
 				stoneVec[level.map[player_ptr->getX() + 1][player_ptr->getY()][1]]->move(&level, RECHTS);
 			}
 
@@ -397,12 +397,12 @@ void Game::move(int _v)
 		}
 		else if (_v == LINKS)
 		{
-			// Nur wenn links Sand oder Leer ist
+			// Only if left is sand or empty
 			if (level.map[player_ptr->getX() - 1][player_ptr->getY()][0] == SAND || level.map[player_ptr->getX() - 1][player_ptr->getY()][0] == EMPTY || level.map[player_ptr->getX() - 1][player_ptr->getY()][0] == DIAMOND)
 			{
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = EMPTY;
 				level.draw(player_ptr->getX(), player_ptr->getY(), EMPTY);
-				// Wenn rechts ein stein liegt, stein muss neu gezeichnet werden
+				// If there is a stone on the right, stone must be redrawn
 				if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == STONE)
 					level.draw(player_ptr->getX() + 1, player_ptr->getY(), STONE);
 				else if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == DIAMOND)
@@ -412,10 +412,10 @@ void Game::move(int _v)
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;
 				//draw();
 			}
-			// Spieler schiebt stein links
+			// Player pushes stone left
 			else if (level.map[player_ptr->getX() - 1][player_ptr->getY()][0] == STONE && level.map[player_ptr->getX() - 2][player_ptr->getY()][0] == EMPTY)
 			{
-				// Wenn schieben geklappt hat, soll neue position auch im map-index eingefügt werden
+				// If push worked, new position should also be inserted in the map index
 				stoneVec[level.map[player_ptr->getX() - 1][player_ptr->getY()][1]]->move(&level, LINKS);
 			}
 		}
@@ -425,7 +425,7 @@ void Game::move(int _v)
 			{
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = EMPTY;
 				level.draw(player_ptr->getX(), player_ptr->getY(), EMPTY);
-				// Wenn rechts ein stein liegt, stein muss neu gezeichnet werden
+				// If there is a stone on the right, stone must be redrawn
 				if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == STONE)
 					level.draw(player_ptr->getX() + 1, player_ptr->getY(), STONE);
 				else if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == DIAMOND)
@@ -442,7 +442,7 @@ void Game::move(int _v)
 			{
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = EMPTY;
 				level.draw(player_ptr->getX(), player_ptr->getY(), EMPTY);
-				// Wenn rechts ein stein liegt, stein muss neu gezeichnet werden
+				// If there is a stone on the right, stone must be redrawn
 				if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == STONE)
 					level.draw(player_ptr->getX() + 1, player_ptr->getY(), STONE);
 				else if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == DIAMOND)

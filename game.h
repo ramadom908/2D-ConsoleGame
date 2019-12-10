@@ -18,7 +18,6 @@ public:
 	void init(Player* _p_ptr);
 
 	void move(int _v);
-	//void gravity(void);
 
 	void update(void);
 	void debug(void);
@@ -36,7 +35,7 @@ public:
 	void gotoxy(int _x, int _y);
 
 	void cursorHide();
-	//     // Iterator (zum Durchlaufen):
+	//     // Iterator (Run through): 
 	//     vector<int>::iterator i;
 	int color;
 
