@@ -37,25 +37,25 @@ void Player::init(Level* _l_ptr)
 
 void Player::move(int _v)
 {
-	if (_v == RECHTS) // dreapta
+	if (_v == RIGHT) // dreapta
 	{
 		//PlaySound(TEXT("walk2.wav"), NULL, SND_ASYNC);
 		X++;
 		draw();
 	}
-	else if (_v == LINKS)// stanga
+	else if (_v == LEFT)// stanga
 	{
 		//PlaySound(TEXT("walk2.wav"), NULL, SND_ASYNC);
 		X--;
 		draw();
 	}
-	else if (_v == RUNTER) //jos
+	else if (_v == DOWN) //jos
 	{
 		//PlaySound(TEXT("walk2.wav"), NULL, SND_ASYNC);
 		Y++;
 		draw();
 	}
-	else if (_v == RAUF) //sus
+	else if (_v == UP) //sus
 	{
 		//PlaySound(TEXT("walk2.wav"), NULL, SND_ASYNC);
 		Y--;

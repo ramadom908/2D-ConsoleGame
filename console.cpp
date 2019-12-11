@@ -48,8 +48,8 @@ void clrscr()
 void setColor(int colorBack, int colorFore)
 {
 	int back = 0;
-	if (colorBack & 1) back |= BACKGROUND_BLUE;
-	if (colorBack & 2) back |= BACKGROUND_GREEN;
+	if (colorBack & 1) back = back | BACKGROUND_BLUE; // toate astea de mai jos se pot scrie asa
+	if (colorBack & 2) back |= BACKGROUND_GREEN;	  //  bara verticala  |  este bitwise or
 	if (colorBack & 4) back |= BACKGROUND_RED;
 	if (colorBack & 8) back |= BACKGROUND_INTENSITY;
 
@@ -87,13 +87,14 @@ void cursorHide(HANDLE *h)
 
 int main()
 {
+
 	HANDLE hwnd;
 	hwnd = GetStdHandle(STD_OUTPUT_HANDLE);
 	cursorHide(&hwnd);
 
 	bool exit = false;
 
-	Player player(SPEED_PLAYER);
+	Player player(SPEED_PLAYER); // viteza setata in stdafx
 
 
 	//level.drawMap();
@@ -126,10 +127,10 @@ int main()
 
 				switch (key)
 				{
-				case KEY_LEFT: game.move(LINKS); break;
-				case KEY_RIGHT: game.move(RECHTS); break;
-				case KEY_UP: game.move(RAUF); break;
-				case KEY_DOWN: game.move(RUNTER); break;
+				case KEY_LEFT: game.move(LEFT); break;
+				case KEY_RIGHT: game.move(RIGHT); break;
+				case KEY_UP: game.move(UP); break;
+				case KEY_DOWN: game.move(DOWN); break;
 				case KEY_RETURN: game.restart(); break;
 				}
 			}
@@ -149,7 +150,7 @@ int main()
 
 		game.update();
 
-		//clrscr();*/
+		//clrscr();
 
 		// ====================================================== 
 		LoopStartTime = GetTickCount();

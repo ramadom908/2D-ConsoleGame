@@ -15,7 +15,8 @@ public:
 
 	void draw(int _x, int _y, int _value);
 
-	int map[MAX_X][MAX_Y][2];
+	//variabile 
+	int map[MAX_X][MAX_Y][2]; // asta este harta jocului
 
 	int debug;
 

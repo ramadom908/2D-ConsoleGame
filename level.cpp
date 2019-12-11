@@ -57,7 +57,9 @@ void Level::load()
 	srand(time(NULL));
 
 	// Fill the playing field
-	for (int y = 0; y < MAX_Y; y++)
+	//codul de mai jos umple ecranul cu piatra pe margini si
+	//in interiorul zonei de joaca(play field) cu nisip
+	for (int y = 0; y < MAX_Y; y++) {
 		for (int x = 0; x < MAX_X; x++)
 		{
 			map[x][y][1] = -1;
@@ -69,15 +71,16 @@ void Level::load()
 				if (value < 7) map[x][y][0] = SAND;
 				else if (value < 8) map[x][y][0] = SAND;
 				else if (value < 9) map[x][y][0] = SAND;
-				else
-				{
+				else // daca las else-ul asta aici umple toata zona cu nisip, 
+				{	 // daca il comentez baga niste locuri goale
 					map[x][y][0] = SAND;
 
 				}
-			}
+			}//TODO: for debug map =x ,  inca nu merge, pentru ca la afisare se afiseaza char
 			else map[x][y][0] = ROCK;
 
 		}
+	}
 	// Middle, empty box
 /*	for (int y=9; y<17; y++)
 		for (int x=16; x<34; x++)
@@ -236,8 +239,11 @@ void Level::drawMap(void)
 			{
 				setColor(black, 11);
 			} break;
-			}
-			std::cout << (char)map[x][y][0];
+			}// comentariile astea ar fi fost sa-mi deseneze numere pe ecran dar aparent nu merge , 
+			//if (((x > 1 && y > 2) && (x < MAX_X - 2 && y < MAX_Y - 2)))
+				std::cout << (char)map[x][y][0];			
+			//else
+			//	std::cout << map[x][y][0]<<" ";
 		}
 
 

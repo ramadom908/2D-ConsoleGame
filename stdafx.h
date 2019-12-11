@@ -9,10 +9,10 @@
 
 #include "targetver.h"
 
-#define RAUF 10000
-#define RECHTS 10001
-#define RUNTER 10002
-#define LINKS 10003
+#define UP 10000
+#define RIGHT 10001
+#define DOWN 10002
+#define LEFT 10003
 
 #define ADD 10004
 
@@ -31,12 +31,12 @@ const int MAX_EMEMY = 8;
 
 #define EMPTY 32
 #define SAND 176 //219
-#define ROCK 167 //206 //188
-#define WALL 58 //197 //177
-#define STONE 30 //184
+#define ROCK 64 //206 //188 '@'  se pot defini si valori hexadecimale  gen:   0x263A  dar trebe afisata corespunzator
+#define WALL 206 //197 //177 
+#define STONE 111//207//15 //184 'o'
 #define PLAYER 1
-#define ENEMY 186 //186 //2      <-------------------------
-#define DIAMOND 254 //4
+#define ENEMY 2 //186 //2    
+#define DIAMOND 30 //4 'triungi'
 #define FIRE 0
 
 const int KEY_UP = 0x48;

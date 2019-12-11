@@ -28,7 +28,7 @@ Stone::Stone(int _speed)
 
 void Stone::move(Level* _l_ptr, int _v)
 {
-	if (_v == RECHTS)
+	if (_v == RIGHT)
 	{
 		// Only if right is empty
 		if (_l_ptr->map[X + 1][Y][0] == EMPTY)
@@ -45,7 +45,7 @@ void Stone::move(Level* _l_ptr, int _v)
 			draw();
 		}
 	}
-	else if (_v == LINKS)
+	else if (_v == LEFT)
 	{
 		// Only if left is empty
 		if (_l_ptr->map[X - 1][Y][0] == EMPTY)
@@ -69,7 +69,7 @@ void Stone::move(Level* _l_ptr, int _v)
 			draw();
 		}
 	}
-	else if (_v == RUNTER)
+	else if (_v == DOWN)
 	{
 		if (_l_ptr->map[X][Y + 1][0] == EMPTY)
 		{
@@ -96,7 +96,7 @@ void Stone::move(Level* _l_ptr, int _v)
 			draw();
 		}
 	}
-	else if (_v == RAUF)
+	else if (_v == UP)
 	{
 		if (_l_ptr->map[X][Y - 1][0] == EMPTY)
 		{
@@ -120,17 +120,17 @@ void Stone::gravity(Level* _l_ptr)
 	{
 		if (_l_ptr->map[X][Y+1][0] == EMPTY)
 		{
-			move(_l_ptr, RUNTER);
+			move(_l_ptr, DOWN);
 		}
 		else if (_l_ptr->map[X-1][Y][0] == EMPTY && _l_ptr->map[X-1][Y+1][0] == EMPTY
 			&& (_l_ptr->map[X][Y+1][0] == STONE || _l_ptr->map[X][Y+1][0] == WALL || _l_ptr->map[X][Y+1][0] == DIAMOND))
 		{
-			move(_l_ptr, LINKS);
+			move(_l_ptr, LEFT);
 		}
 		else if (_l_ptr->map[X+1][Y][0] == EMPTY && _l_ptr->map[X+1][Y+1][0] == EMPTY
 			&& (_l_ptr->map[X][Y+1][0] == STONE || _l_ptr->map[X][Y+1][0] == WALL || _l_ptr->map[X][Y+1][0] == DIAMOND))
 		{
-			move(_l_ptr, RECHTS);
+			move(_l_ptr, RIGHT);
 		}
 	}
 	slowdown();

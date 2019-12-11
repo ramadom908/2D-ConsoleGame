@@ -50,7 +50,7 @@ void Game::init(Player* _p_ptr)
 	level.load();
 	level.drawMap();
 
-	//int i_stone=0;
+	//int i_stone=0; // initializare obiecte// stone enemy diamant?
 	for (int y = 0; y < MAX_Y; y++)
 		for (int x = 0; x < MAX_X; x++)
 		{
@@ -123,109 +123,109 @@ void Game::ai(void)
 			{
 				if (enemyVec[i]->getDelay() == 0)
 				{
-					if (enemyVec[i]->getWay() == RECHTS)
+					if (enemyVec[i]->getWay() == RIGHT)
 					{
 						if (level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] != EMPTY && level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] == EMPTY)
 						{
-							enemyVec[i]->setWay(RECHTS);
-							enemyVec[i]->move(&level, RECHTS);
+							enemyVec[i]->setWay(RIGHT);
+							enemyVec[i]->move(&level, RIGHT);
 						}
 						else if (level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY() - 1][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] == EMPTY)
 						{
-							enemyVec[i]->setWay(RAUF);
-							enemyVec[i]->move(&level, RAUF);
+							enemyVec[i]->setWay(UP);
+							enemyVec[i]->move(&level, UP);
 						}
 						else if (level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] != EMPTY && level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] != EMPTY
 							&& level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] == EMPTY)
 						{
-							enemyVec[i]->setWay(RUNTER);
-							enemyVec[i]->move(&level, RUNTER);
+							enemyVec[i]->setWay(DOWN);
+							enemyVec[i]->move(&level, DOWN);
 						}
 						else if (level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] != EMPTY && level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] != EMPTY
 							&& level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] != EMPTY && level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] == EMPTY)
 						{
-							enemyVec[i]->setWay(LINKS);
-							enemyVec[i]->move(&level, LINKS);
+							enemyVec[i]->setWay(LEFT);
+							enemyVec[i]->move(&level, LEFT);
 						}
-						else enemyVec[i]->setWay(RUNTER);
+						else enemyVec[i]->setWay(DOWN);
 					}
-					else if (enemyVec[i]->getWay() == RUNTER)
+					else if (enemyVec[i]->getWay() == DOWN)
 					{
 						if (level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] == EMPTY)
 						{
-							enemyVec[i]->setWay(RUNTER);
-							enemyVec[i]->move(&level, RUNTER);
+							enemyVec[i]->setWay(DOWN);
+							enemyVec[i]->move(&level, DOWN);
 						}
 						else if (level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY() - 1][0] != EMPTY && level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] == EMPTY)
 						{
-							enemyVec[i]->setWay(RECHTS);
-							enemyVec[i]->move(&level, RECHTS);
+							enemyVec[i]->setWay(RIGHT);
+							enemyVec[i]->move(&level, RIGHT);
 						}
 						else if (level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] != EMPTY
 							&& level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] == EMPTY)
 						{
-							enemyVec[i]->setWay(LINKS);
-							enemyVec[i]->move(&level, LINKS);
+							enemyVec[i]->setWay(LEFT);
+							enemyVec[i]->move(&level, LEFT);
 						}
 						else if (level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] != EMPTY
 							&& level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] == EMPTY)
 						{
-							enemyVec[i]->setWay(RAUF);
-							enemyVec[i]->move(&level, RAUF);
+							enemyVec[i]->setWay(UP);
+							enemyVec[i]->move(&level, UP);
 						}
-						else enemyVec[i]->setWay(LINKS);
+						else enemyVec[i]->setWay(LEFT);
 					}
-					else if (enemyVec[i]->getWay() == LINKS)
+					else if (enemyVec[i]->getWay() == LEFT)
 					{
 						if (level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] != EMPTY && level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] == EMPTY)
 						{
-							enemyVec[i]->setWay(LINKS);
-							enemyVec[i]->move(&level, LINKS);
+							enemyVec[i]->setWay(LEFT);
+							enemyVec[i]->move(&level, LEFT);
 						}
 						else if (level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY() + 1][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] == EMPTY)
 						{
-							enemyVec[i]->setWay(RUNTER);
-							enemyVec[i]->move(&level, RUNTER);
+							enemyVec[i]->setWay(DOWN);
+							enemyVec[i]->move(&level, DOWN);
 						}
 						else if (level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] != EMPTY && level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] != EMPTY
 							&& level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] == EMPTY)
 						{
-							enemyVec[i]->setWay(RAUF);
-							enemyVec[i]->move(&level, RAUF);
+							enemyVec[i]->setWay(UP);
+							enemyVec[i]->move(&level, UP);
 						}
 						else if (level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] != EMPTY && level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] != EMPTY
 							&& level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] != EMPTY && level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] == EMPTY)
 						{
-							enemyVec[i]->setWay(RECHTS);
-							enemyVec[i]->move(&level, RECHTS);
+							enemyVec[i]->setWay(RIGHT);
+							enemyVec[i]->move(&level, RIGHT);
 						}
-						else enemyVec[i]->setWay(RAUF);
+						else enemyVec[i]->setWay(UP);
 					}
-					else if (enemyVec[i]->getWay() == RAUF)
+					else if (enemyVec[i]->getWay() == UP)
 					{
 						if (level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] == EMPTY)
 						{
-							enemyVec[i]->setWay(RAUF);
-							enemyVec[i]->move(&level, RAUF);
+							enemyVec[i]->setWay(UP);
+							enemyVec[i]->move(&level, UP);
 						}
 						else if (level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY() + 1][0] != EMPTY && level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] == EMPTY)
 						{
-							enemyVec[i]->setWay(LINKS);
-							enemyVec[i]->move(&level, LINKS);
+							enemyVec[i]->setWay(LEFT);
+							enemyVec[i]->move(&level, LEFT);
 						}
 						else if (level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] != EMPTY
 							&& level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] == EMPTY)
 						{
-							enemyVec[i]->setWay(RECHTS);
-							enemyVec[i]->move(&level, RECHTS);
+							enemyVec[i]->setWay(RIGHT);
+							enemyVec[i]->move(&level, RIGHT);
 						}
 						else if (level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] != EMPTY
 							&& level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] == EMPTY)
 						{
-							enemyVec[i]->setWay(RUNTER);
-							enemyVec[i]->move(&level, RUNTER);
+							enemyVec[i]->setWay(DOWN);
+							enemyVec[i]->move(&level, DOWN);
 						}
-						else enemyVec[i]->setWay(RECHTS);
+						else enemyVec[i]->setWay(RIGHT);
 					}
 				}
 				enemyVec[i]->slowdown();
@@ -238,7 +238,7 @@ void Game::ai(void)
 // Stone Control
 void Game::gravity(void)
 {
-	// Stone
+	// Stone + diamante procesiing for gravity
 	for (int i = 0; i < stoneVec.size(); i++)
 	{
 		// is not stone broken yet?
@@ -254,7 +254,7 @@ void Game::gravity(void)
 				{
 					if (level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == EMPTY)
 					{
-						stoneVec[i]->move(&level, RUNTER);
+						stoneVec[i]->move(&level, DOWN);
 						if (level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == PLAYER)
 						{
 							// Stone collides with player
@@ -271,12 +271,12 @@ void Game::gravity(void)
 					else if (level.map[stoneVec[i]->getX() - 1][stoneVec[i]->getY()][0] == EMPTY && level.map[stoneVec[i]->getX() - 1][stoneVec[i]->getY() + 1][0] == EMPTY
 						&& (level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == STONE || level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == WALL || level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == DIAMOND))
 					{
-						stoneVec[i]->move(&level, LINKS);
+						stoneVec[i]->move(&level, LEFT);
 					}
 					else if (level.map[stoneVec[i]->getX() + 1][stoneVec[i]->getY()][0] == EMPTY && level.map[stoneVec[i]->getX() + 1][stoneVec[i]->getY() + 1][0] == EMPTY
 						&& (level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == STONE || level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == WALL || level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == DIAMOND))
 					{
-						stoneVec[i]->move(&level, RECHTS);
+						stoneVec[i]->move(&level, RIGHT);
 					}
 				}
 				stoneVec[i]->slowdown();
@@ -285,6 +285,7 @@ void Game::gravity(void)
 		///////////////////////////////////////////////
 		// Diamond
 		// Diamond is not broken yet?
+		// if i< diaVect.size... procesam si diamentele in acelasi for
 		if (diaVec.size() > i)
 		{
 			if (!diaVec[i]->getState())
@@ -306,7 +307,7 @@ void Game::gravity(void)
 					{
 						if (level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == EMPTY)
 						{
-							diaVec[i]->move(&level, RUNTER);
+							diaVec[i]->move(&level, DOWN);
 							if (level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == PLAYER)
 							{
 								//PlaySound(TEXT("explosion-02.wav"), NULL, SND_ASYNC);
@@ -322,12 +323,12 @@ void Game::gravity(void)
 						else if (level.map[diaVec[i]->getX() - 1][diaVec[i]->getY()][0] == EMPTY && level.map[diaVec[i]->getX() - 1][diaVec[i]->getY() + 1][0] == EMPTY
 							&& (level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == STONE || level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == WALL || level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == DIAMOND))
 						{
-							diaVec[i]->move(&level, LINKS);
+							diaVec[i]->move(&level, LEFT);
 						}
 						else if (level.map[diaVec[i]->getX() + 1][diaVec[i]->getY()][0] == EMPTY && level.map[diaVec[i]->getX() + 1][diaVec[i]->getY() + 1][0] == EMPTY
 							&& (level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == STONE || level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == WALL || level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == DIAMOND))
 						{
-							diaVec[i]->move(&level, RECHTS);
+							diaVec[i]->move(&level, RIGHT);
 						}
 					}
 					diaVec[i]->slowdown();
@@ -376,26 +377,26 @@ void Game::move(int _v)
 	// is player dead?
 	if (!player_ptr->getState())
 	{
-		if (_v == RECHTS)
+		if (_v == RIGHT)
 		{
 			// Only if right is Sand, Diamond or Empty
 			if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == SAND || level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == EMPTY || level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == DIAMOND)
 			{
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = EMPTY;
 				level.draw(player_ptr->getX(), player_ptr->getY(), EMPTY);
-				player_ptr->move(RECHTS);
+				player_ptr->move(RIGHT);
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;
 			}
 			// Player pushes stone
 			else if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == STONE && level.map[player_ptr->getX() + 2][player_ptr->getY()][0] == EMPTY)
 			{
 				// If push worked, new position should also be inserted in the map index
-				stoneVec[level.map[player_ptr->getX() + 1][player_ptr->getY()][1]]->move(&level, RECHTS);
+				stoneVec[level.map[player_ptr->getX() + 1][player_ptr->getY()][1]]->move(&level, RIGHT);
 			}
 
 
 		}
-		else if (_v == LINKS)
+		else if (_v == LEFT)
 		{
 			// Only if left is sand or empty
 			if (level.map[player_ptr->getX() - 1][player_ptr->getY()][0] == SAND || level.map[player_ptr->getX() - 1][player_ptr->getY()][0] == EMPTY || level.map[player_ptr->getX() - 1][player_ptr->getY()][0] == DIAMOND)
@@ -408,7 +409,7 @@ void Game::move(int _v)
 				else if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == DIAMOND)
 					level.draw(player_ptr->getX() + 1, player_ptr->getY(), DIAMOND);
 
-				player_ptr->move(LINKS);
+				player_ptr->move(LEFT);
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;
 				//draw();
 			}
@@ -416,10 +417,10 @@ void Game::move(int _v)
 			else if (level.map[player_ptr->getX() - 1][player_ptr->getY()][0] == STONE && level.map[player_ptr->getX() - 2][player_ptr->getY()][0] == EMPTY)
 			{
 				// If push worked, new position should also be inserted in the map index
-				stoneVec[level.map[player_ptr->getX() - 1][player_ptr->getY()][1]]->move(&level, LINKS);
+				stoneVec[level.map[player_ptr->getX() - 1][player_ptr->getY()][1]]->move(&level, LEFT);
 			}
 		}
-		else if (_v == RUNTER)
+		else if (_v == DOWN)
 		{
 			if (level.map[player_ptr->getX()][player_ptr->getY() + 1][0] == SAND || level.map[player_ptr->getX()][player_ptr->getY() + 1][0] == EMPTY || level.map[player_ptr->getX()][player_ptr->getY() + 1][0] == DIAMOND)
 			{
@@ -431,12 +432,12 @@ void Game::move(int _v)
 				else if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == DIAMOND)
 					level.draw(player_ptr->getX() + 1, player_ptr->getY(), DIAMOND);
 
-				player_ptr->move(RUNTER);
+				player_ptr->move(DOWN);
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;
 				//draw();
 			}
 		}
-		else if (_v == RAUF)
+		else if (_v == UP)
 		{
 			if (level.map[player_ptr->getX()][player_ptr->getY() - 1][0] == SAND || level.map[player_ptr->getX()][player_ptr->getY() - 1][0] == EMPTY || level.map[player_ptr->getX()][player_ptr->getY() - 1][0] == DIAMOND)
 			{
@@ -447,7 +448,7 @@ void Game::move(int _v)
 					level.draw(player_ptr->getX() + 1, player_ptr->getY(), STONE);
 				else if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == DIAMOND)
 					level.draw(player_ptr->getX() + 1, player_ptr->getY(), DIAMOND);
-				player_ptr->move(RAUF);
+				player_ptr->move(UP);
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;
 				//draw();
 			}

@@ -23,10 +23,7 @@ public:
 	void debug(void);
 	void gravity(void);
 	void ai(void);
-
-	Player* player_ptr;
-
-	Level level;
+	
 	void explosion(int _x, int _y);
 
 	void setColor(int colorBack, int colorFore);
@@ -35,6 +32,12 @@ public:
 	void gotoxy(int _x, int _y);
 
 	void cursorHide();
+
+
+	Player* player_ptr;
+
+	Level level;
+
 	//     // Iterator (Run through): 
 	//     vector<int>::iterator i;
 	int color;
