@@ -28,7 +28,7 @@ Stone::Stone(int _speed)
 
 void Stone::move(Level* _l_ptr, int _v)
 {
-	if (_v == RIGHT)
+	if (_v == RIGHT)//TODO: sa redenumesc _v in directie si _l_ptr in level_ptr sau mai bine in ptr_level
 	{
 		// Only if right is empty
 		if (_l_ptr->map[X + 1][Y][0] == EMPTY)

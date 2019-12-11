@@ -87,8 +87,7 @@ void cursorHide(HANDLE *h)
 
 int main()
 {
-
-	HANDLE hwnd;
+	HANDLE hwnd;//TODO:TASK sa vad ce face handle
 	hwnd = GetStdHandle(STD_OUTPUT_HANDLE);
 	cursorHide(&hwnd);
 
@@ -114,9 +113,9 @@ int main()
 	{
 
 
-		if (_kbhit())
+		if (_kbhit())// daca e apasata o tasta, orice tasta
 		{
-			int key = _getch();
+			int key = _getch(); // presupun ca aici se preia care tasta am apasat
 			if (key == KEY_ESCAPE) exit = true;
 
 			if (player.getDelay() == 0)

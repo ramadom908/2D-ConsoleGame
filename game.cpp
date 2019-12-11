@@ -40,9 +40,11 @@ void Game::explosion(int _x, int _y)
 	explVec.push_back(expl_ptr);
 }
 
-void Game::init(Player* _p_ptr)
+
+// initializare obiecte, stone,enemy, diamond
+void Game::init(Player* _player_ptr)
 {
-	player_ptr = _p_ptr;
+	player_ptr = _player_ptr;
 
 	color = 0;
 	curr_diamond = 0;
@@ -51,19 +53,25 @@ void Game::init(Player* _p_ptr)
 	level.drawMap();
 
 	//int i_stone=0; // initializare obiecte// stone enemy diamant?
+	//parcurg toata harta si unde gasesc obiecte le initializez memorie
+	//TODO:TASK sa vad cum se face parcurgerea asta pe coordonate ;a harta asta
+	//TODO:TASK sa vad care-i treaba cu alocarea cu new
+	//TODO:TASK sa vad care-i treaba cu vector class
 	for (int y = 0; y < MAX_Y; y++)
 		for (int x = 0; x < MAX_X; x++)
 		{
 			if (level.map[x][y][0] == STONE)
 			{
-				stone_ptr = new Stone;
-				stone_ptr->setX(x);
-				stone_ptr->setY(y);
-				stoneVec.push_back(stone_ptr);
-				level.map[x][y][1] = stoneVec.size() - 1;
-			}
+				stone_ptr = new Stone; // e ca si cum fac o noua variabila  stone doar ca e pe heap
+				stone_ptr->setX(x);  // x,y sunt coordonatele unde gasesc o piatra in map, astfel ca le setez si in variabila nou creata
+				stone_ptr->setY(y);  //
+				stoneVec.push_back(stone_ptr);//TODO: ??? pun piatra intr-un vector de pietre, ca sa le pot manipula mai incolo?
+				level.map[x][y][1] = stoneVec.size() - 1;// pozitia asta este initializata peste tot cu -1
+			}											 // aici setez pozitia asta cu dimensiunea vectorului de
+														 //pietre -1 inca nu stiu de ce..., probabil pt parcurgere de la 0 in vectorul de pietre si sa le tin cont unde sunt
+				//TODO: TASK sa vad de ce stetez ma sus cu dimensiune -1 si nu cu dimensiune
 			else if (level.map[x][y][0] == ENEMY)
-			{
+			{// la fel ca la stone
 				enemy_ptr = new Enemy;
 				enemy_ptr->setX(x);
 				enemy_ptr->setY(y);
@@ -71,7 +79,7 @@ void Game::init(Player* _p_ptr)
 				level.map[x][y][1] = enemyVec.size() - 1;
 			}
 			else if (level.map[x][y][0] == DIAMOND)
-			{
+			{//la fel ca la stone
 				dia_ptr = new Diamond;
 				dia_ptr->setX(x);
 				dia_ptr->setY(y);
@@ -82,7 +90,8 @@ void Game::init(Player* _p_ptr)
 
 	//MAX_STONE = i;
 	//std::cout << i;
-	_p_ptr->init(&level);
+	// initializare level_ptr de la player
+	_player_ptr->init(&level);
 
 	setColor(black, 7);
 	centerText(1, " Lives", diaVec.size() - curr_diamond, " Diamonds", 49, " Time", 109, " Points", 1);
@@ -93,7 +102,7 @@ void Game::ai(void)
 {
 	for (int i = 0; i < enemyVec.size(); i++)
 	{
-		// Stone is not broken yet?
+		// Enemy is not broken yet?
 		if (!enemyVec[i]->getState())
 		{   // if left, over, right or under player, enemy explodes
 			if (level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] == PLAYER ||
@@ -235,7 +244,7 @@ void Game::ai(void)
 	}
 }
 
-// Stone Control
+// Stone Control cred ca ar trebuii rescrisa ca e prea stupida functia... merge prin tot vectorul de stone nenecesar
 void Game::gravity(void)
 {
 	// Stone + diamante procesiing for gravity
@@ -311,7 +320,7 @@ void Game::gravity(void)
 							if (level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == PLAYER)
 							{
 								//PlaySound(TEXT("explosion-02.wav"), NULL, SND_ASYNC);
-								explosion(player_ptr->getX(), player_ptr->getY());
+								explosion(player_ptr->getX(), player_ptr->getY());// TODO: de verificat ce-i aici daca chiar declanseaza explozie
 							}
 							else if (level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == ENEMY)
 							{
@@ -346,7 +355,7 @@ void Game::update(void)
 		for (int i = 0; i < explVec.size(); i++)
 		{
 			explVec[i]->firing(&level);
-			// explosion from Vector delete after end
+			// explosion from Vector delete after end, scot explozia din vector dupa ce termin animatia
 			if (explVec[i]->getIndex() > 4)
 				explVec.erase(explVec.begin() + i);
 		}
@@ -382,10 +391,11 @@ void Game::move(int _v)
 			// Only if right is Sand, Diamond or Empty
 			if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == SAND || level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == EMPTY || level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == DIAMOND)
 			{
-				level.map[player_ptr->getX()][player_ptr->getY()][0] = EMPTY;
-				level.draw(player_ptr->getX(), player_ptr->getY(), EMPTY);
-				player_ptr->move(RIGHT);
-				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;
+				level.map[player_ptr->getX()][player_ptr->getY()][0] = EMPTY;// goleste map-ul 
+				level.draw(player_ptr->getX(), player_ptr->getY(), EMPTY);	 // deseneaza ce-i in map adica gol
+
+				player_ptr->move(RIGHT);// mut player pe noul loc si desenez pe ecran
+				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;// bag player in map
 			}
 			// Player pushes stone
 			else if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == STONE && level.map[player_ptr->getX() + 2][player_ptr->getY()][0] == EMPTY)
@@ -403,12 +413,13 @@ void Game::move(int _v)
 			{
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = EMPTY;
 				level.draw(player_ptr->getX(), player_ptr->getY(), EMPTY);
-				// If there is a stone on the right, stone must be redrawn
-				if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == STONE)
+
+				// If there is a stone on the right, stone must be redrawn, daca sunt comentate liniile astea prog merge just fine pt toate directiile e valabil
+				if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == STONE)// TODO: ??? de ce e nevoie sa rezdesenez astea 2?
 					level.draw(player_ptr->getX() + 1, player_ptr->getY(), STONE);
 				else if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == DIAMOND)
 					level.draw(player_ptr->getX() + 1, player_ptr->getY(), DIAMOND);
-
+				//
 				player_ptr->move(LEFT);
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;
 				//draw();
@@ -426,12 +437,13 @@ void Game::move(int _v)
 			{
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = EMPTY;
 				level.draw(player_ptr->getX(), player_ptr->getY(), EMPTY);
+
 				// If there is a stone on the right, stone must be redrawn
 				if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == STONE)
 					level.draw(player_ptr->getX() + 1, player_ptr->getY(), STONE);
 				else if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == DIAMOND)
 					level.draw(player_ptr->getX() + 1, player_ptr->getY(), DIAMOND);
-
+				//
 				player_ptr->move(DOWN);
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;
 				//draw();
@@ -443,14 +455,16 @@ void Game::move(int _v)
 			{
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = EMPTY;
 				level.draw(player_ptr->getX(), player_ptr->getY(), EMPTY);
-				// If there is a stone on the right, stone must be redrawn
+
+				// If there is a stone on the right, stone must be redrawn 
 				if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == STONE)
 					level.draw(player_ptr->getX() + 1, player_ptr->getY(), STONE);
 				else if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == DIAMOND)
 					level.draw(player_ptr->getX() + 1, player_ptr->getY(), DIAMOND);
+				//
 				player_ptr->move(UP);
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;
-				//draw();
+				//draw(); 			
 			}
 		}
 	}
@@ -525,9 +539,15 @@ void Game::gotoxy(int _x, int _y)
 }
 
 Game::~Game()
-{
+{// aparent trebuie sa merg prin vectorii astia si sa sterg toti pointerii individual
+	//https://stackoverflow.com/questions/30476159/deleting-an-array-of-pointers-vs-deleting-a-vector-of-pointers
+	//TODO:TASk sa vad mai bine care-i treaba cu delete si cu vectorii astia, linkul de mai sus e util
+	// eventual sa vad si cum verific daca memoria a fost eliberata corect
+	for (int i = 0; i < stoneVec.size(); i++) {
+		delete stoneVec[i];
+	}
 	delete[] expl_ptr;
-	delete[] stone_ptr;
+	//delete[] stone_ptr;// 
 	delete[] enemy_ptr;
 	delete[] expl_ptr;
 }

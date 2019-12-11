@@ -184,7 +184,8 @@ void Level::load()
 		{
 			map[x + 2][y + 3][0] = temp[x][y];
 		}
-	// Player place is edged with sand
+
+	// Adaug aici jucatorul, player, la marginea cu nisipul
 	map[2][3][0] = PLAYER;
 	/*	map[3][3][0] = SAND;
 		map[3][4][0] = SAND;
@@ -247,8 +248,12 @@ void Level::drawMap(void)
 		}
 
 
-	// So picture is not one goes down
-
+	// TODO: de scos liniile astea 2 de mai jos, sunt pt debug mode
+	std::cout << "ding ming"<<std::endl;
+	std::cout << "ding ming" << std::endl;
+	// functia de mai jos reseteaza pozitia imaginii de sus de tot am impresia, 
+	//ideea e ca daca tot scriu se face scroll la imagine in sus cum e si normal 
+	//reseteaza pozitia cursorului, daca fac scroll in jos din butonul din dreapta sus o sa vad
 	point.X = 0;
 	point.Y = 0;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);

@@ -116,8 +116,8 @@ void Detonate::firing(Level* _l_ptr)
 	{
 		draw();
 		// enter on map, where it burns with explosion
-		if (index < 4)
-		{
+		if (index < 4) // asta odata ce l-am setat nu mai trebuie refacut... intra de 4 ori degeaba aici... cred..
+		{	// aici setez map in zona in care a avut loc explozia cu 0 adica fire
 			_l_ptr->map[X - 1][Y - 1][0] = FIRE; _l_ptr->map[X][Y - 1][0] = FIRE; _l_ptr->map[X + 1][Y - 1][0] = FIRE;
 			_l_ptr->map[X - 1][Y][0] = FIRE; _l_ptr->map[X][Y][0] = FIRE; _l_ptr->map[X + 1][Y][0] = FIRE;
 			_l_ptr->map[X - 1][Y + 1][0] = FIRE; _l_ptr->map[X][Y + 1][0] = FIRE; _l_ptr->map[X + 1][Y + 1][0] = FIRE;
@@ -141,7 +141,7 @@ void Detonate::firing(Level* _l_ptr)
 			if (_l_ptr->map[X + 2][Y + 1][0] == PLAYER)
 				_l_ptr->draw(X + 2, Y + 1, PLAYER);
 		}
-
+		// aici cresc index ca sa pot desena alt simbol pt explozie
 		index++;
 	}
 	slowdown();

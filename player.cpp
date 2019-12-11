@@ -21,7 +21,7 @@ Player::Player(int _speed)
 
 	walk[SPEED] = _speed;
 	walk[DELAY] = 0;
-
+	
 	/*	level_ptr = _l_ptr;
 		level_ptr->map[X][Y][0] = PLAYER;
 
@@ -145,13 +145,13 @@ void Player::slowdown(void)
 }
 
 void Player::draw(void)
-{
+{   //TODO:TASK sa vad ce-i cu COORD asta de mai jos
 	COORD point;
 	point.X = X;
 	point.Y = Y;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
-	setColor(black, 14);
-	std::cout << (char)PLAYER;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);// setez cursorul la pozitia cu playerul
+	setColor(black, 14);// setam culorile
+	std::cout << (char)PLAYER;// si scriu caracterul pt player
 }
 
 void Player::setColor(int colorBack, int colorFore)
