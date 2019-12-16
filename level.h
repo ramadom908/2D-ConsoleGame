@@ -3,6 +3,10 @@
 
 #include "stdafx.h"
 
+//std::ifstream cin1("in.txt");
+//
+//std::ofstream cout1("out.txt");
+
 class Level
 {
 public:
@@ -18,11 +22,20 @@ public:
 	//variabile 
 	int map[MAX_X][MAX_Y][2]; // asta este harta jocului
 
+	int mapTranspusa[MAX_X][MAX_Y];
+
+	int mapCitita[MAX_Y][MAX_X];
+
+
+	//std::ifstream cin1;
+	//std::ofstream cout1;
+
+
 	int debug;
 
 private:
 	COORD point;
-
+	
 };
 
 #endif

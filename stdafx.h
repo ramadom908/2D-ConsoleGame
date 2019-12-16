@@ -59,7 +59,7 @@ const int CONSOLE_HEIGHT = 40;
 #include <vector>
 #include <dos.h> 
 #include <Mmsystem.h> 
-
+#include<fstream>
 enum color
 {
 	black,
