@@ -86,7 +86,7 @@ void cursorHide(HANDLE *h)
 }
 
 int main()
-{
+{//comment
 	HANDLE hwnd;//TODO:TASK sa vad ce face handle
 	hwnd = GetStdHandle(STD_OUTPUT_HANDLE);
 	cursorHide(&hwnd);
