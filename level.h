@@ -15,7 +15,7 @@ public:
 	void load();
 	void drawMap(void);
 
-	void setColor(int colorBack, int colorFore);
+	
 
 	void draw(int _x, int _y, int _value);
 

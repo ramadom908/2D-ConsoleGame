@@ -31,7 +31,6 @@ public:
 	void draw(void);
 	void draw(Level* _l_ptr);
 
-	void setColor(int colorBack, int colorFore);
 
 	int debug;
 

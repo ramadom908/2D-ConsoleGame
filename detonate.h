@@ -10,7 +10,6 @@ public:
 	Detonate(void);
 	Detonate(int _x, int _y);
 
-	void setColor(int colorBack, int colorFore);
 
 	int getX() { return X; }
 	int getY() { return Y; }

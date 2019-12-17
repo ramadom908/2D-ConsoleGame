@@ -168,19 +168,4 @@ void Enemy::draw(Level* _l_ptr)
 	std::cout << _l_ptr->map[X][Y][1];
 }
 
-void Enemy::setColor(int colorBack, int colorFore)
-{
-	int back = 0;
-	if (colorBack & 1) back |= BACKGROUND_BLUE;
-	if (colorBack & 2) back |= BACKGROUND_GREEN;
-	if (colorBack & 4) back |= BACKGROUND_RED;
-	if (colorBack & 8) back |= BACKGROUND_INTENSITY;
 
-	int fore = 0;
-	if (colorFore & 1) fore |= FOREGROUND_BLUE;
-	if (colorFore & 2) fore |= FOREGROUND_GREEN;
-	if (colorFore & 4) fore |= FOREGROUND_RED;
-	if (colorFore & 8) fore |= FOREGROUND_INTENSITY;
-
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), back | fore);
-}

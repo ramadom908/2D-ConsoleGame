@@ -29,7 +29,7 @@ public:
 
 	void draw(void);
 
-	void setColor(int colorBack, int colorFore);
+	
 
 private:
 	int X;

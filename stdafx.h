@@ -60,6 +60,18 @@ const int CONSOLE_HEIGHT = 40;
 #include <dos.h> 
 #include <Mmsystem.h> 
 #include<fstream>
+
+
+#ifndef MY_FOO_HEADER_
+#define MY_FOO_HEADER_
+void setColor(int colorBack, int colorFore);
+// Color for writing
+#endif
+
+
+
+
+
 enum color
 {
 	black,

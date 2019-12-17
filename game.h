@@ -26,7 +26,7 @@ public:
 	
 	void explosion(int _x, int _y);
 
-	void setColor(int colorBack, int colorFore);
+	
 	void centerText(const char *message, int ypos);
 	void centerText(int _l, const char *text1, int _d, const char *text2, int _t, const char *text3, int _p, const char *text4, int ypos);
 	void gotoxy(int _x, int _y);
