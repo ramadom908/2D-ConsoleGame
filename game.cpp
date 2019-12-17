@@ -40,6 +40,59 @@ void Game::explosion(int _x, int _y)
 	explVec.push_back(expl_ptr);
 }
 
+void Game::loadObjects(Level *level_ptr, Player * player_ptr) {
+
+
+	//int i_stone=0; // initializare obiecte// stone enemy diamant?
+	//parcurg toata harta si unde gasesc obiecte le initializez memorie
+	//TODO:TASK sa vad cum se face parcurgerea asta pe coordonate ;a harta asta
+	//TODO:TASK sa vad care-i treaba cu alocarea cu new
+	//TODO:TASK sa vad care-i treaba cu vector class
+	for (int y = 0; y < MAX_Y; y++)
+		for (int x = 0; x < MAX_X; x++)
+		{
+			if (level_ptr->map[x][y][0] == STONE)
+			{
+				stone_ptr = new Stone; // e ca si cum fac o noua variabila  stone doar ca e pe heap
+				stone_ptr->setX(x);  // x,y sunt coordonatele unde gasesc o piatra in map, astfel ca le setez si in variabila nou creata
+				stone_ptr->setY(y);  //
+				stoneVec.push_back(stone_ptr);//TODO: ??? pun piatra intr-un vector de pietre, ca sa le pot manipula mai incolo?
+				level_ptr->map[x][y][1] = stoneVec.size() - 1;// pozitia asta este initializata peste tot cu -1
+			}											 // aici setez pozitia asta cu dimensiunea vectorului de
+														 //pietre -1 inca nu stiu de ce..., probabil pt parcurgere de la 0 in vectorul de pietre si sa le tin cont unde sunt
+				//TODO: TASK sa vad de ce stetez ma sus cu dimensiune -1 si nu cu dimensiune
+			else if (level_ptr->map[x][y][0] == ENEMY)
+			{// la fel ca la stone
+				enemy_ptr = new Enemy;
+				enemy_ptr->setX(x);
+				enemy_ptr->setY(y);
+				enemyVec.push_back(enemy_ptr);
+				level_ptr->map[x][y][1] = enemyVec.size() - 1;
+			}
+			else if (level_ptr->map[x][y][0] == DIAMOND)
+			{//la fel ca la stone
+				dia_ptr = new Diamond;
+				dia_ptr->setX(x);
+				dia_ptr->setY(y);
+				diaVec.push_back(dia_ptr);
+				level_ptr->map[x][y][1] = diaVec.size() - 1;
+			}
+			else if (level_ptr->map[x][y][0] == PLAYER)
+			{//initializare player cu coordonatele din in.txt
+				player_ptr->setX(x);
+				player_ptr->setY(y);
+			}
+		}
+
+	//MAX_STONE = i;
+	//std::cout << i;
+	
+
+
+}
+
+
+
 
 // initializare obiecte, stone,enemy, diamond
 void Game::init(Player* _player_ptr)
@@ -52,49 +105,8 @@ void Game::init(Player* _player_ptr)
 	level.load();
 	level.drawMap();
 
-	//int i_stone=0; // initializare obiecte// stone enemy diamant?
-	//parcurg toata harta si unde gasesc obiecte le initializez memorie
-	//TODO:TASK sa vad cum se face parcurgerea asta pe coordonate ;a harta asta
-	//TODO:TASK sa vad care-i treaba cu alocarea cu new
-	//TODO:TASK sa vad care-i treaba cu vector class
-	for (int y = 0; y < MAX_Y; y++)
-		for (int x = 0; x < MAX_X; x++)
-		{
-			if (level.map[x][y][0] == STONE)
-			{
-				stone_ptr = new Stone; // e ca si cum fac o noua variabila  stone doar ca e pe heap
-				stone_ptr->setX(x);  // x,y sunt coordonatele unde gasesc o piatra in map, astfel ca le setez si in variabila nou creata
-				stone_ptr->setY(y);  //
-				stoneVec.push_back(stone_ptr);//TODO: ??? pun piatra intr-un vector de pietre, ca sa le pot manipula mai incolo?
-				level.map[x][y][1] = stoneVec.size() - 1;// pozitia asta este initializata peste tot cu -1
-			}											 // aici setez pozitia asta cu dimensiunea vectorului de
-														 //pietre -1 inca nu stiu de ce..., probabil pt parcurgere de la 0 in vectorul de pietre si sa le tin cont unde sunt
-				//TODO: TASK sa vad de ce stetez ma sus cu dimensiune -1 si nu cu dimensiune
-			else if (level.map[x][y][0] == ENEMY)
-			{// la fel ca la stone
-				enemy_ptr = new Enemy;
-				enemy_ptr->setX(x);
-				enemy_ptr->setY(y);
-				enemyVec.push_back(enemy_ptr);
-				level.map[x][y][1] = enemyVec.size() - 1;
-			}
-			else if (level.map[x][y][0] == DIAMOND)
-			{//la fel ca la stone
-				dia_ptr = new Diamond;
-				dia_ptr->setX(x);
-				dia_ptr->setY(y);
-				diaVec.push_back(dia_ptr);
-				level.map[x][y][1] = diaVec.size() - 1;
-			}
-			else if (level.map[x][y][0] == PLAYER)
-			{//initializare player cu coordonatele din in.txt
-				player_ptr->setX(x);
-				player_ptr->setY(y);
-			}
-		}
+	loadObjects(&level, _player_ptr);
 
-	//MAX_STONE = i;
-	//std::cout << i;
 	// initializare level_ptr de la player
 	_player_ptr->init(&level);
 

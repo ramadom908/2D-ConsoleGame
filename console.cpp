@@ -101,8 +101,7 @@ int main()
 /*	Enemy enemy[2];
 	enemy[0].init(&level, 16, 9, SPEED_ENEMY);
 	enemy[1].init(&level, 63, 16, SPEED_ENEMY);*/
-	setColor(black, 7);
-	centerText(" 1 Lives |  0 Diamonds | 109 Time | 00032 Points ", 1);
+	
 
 	Game game;
 	game.init(&player);
