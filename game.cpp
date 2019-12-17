@@ -431,12 +431,7 @@ void Game::move(int _v)
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = EMPTY;
 				level.draw(player_ptr->getX(), player_ptr->getY(), EMPTY);
 
-				// If there is a stone on the right, stone must be redrawn, daca sunt comentate liniile astea prog merge just fine pt toate directiile e valabil
-				if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == STONE)// TODO: ??? de ce e nevoie sa rezdesenez astea 2?
-					level.draw(player_ptr->getX() + 1, player_ptr->getY(), STONE);
-				else if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == DIAMOND)
-					level.draw(player_ptr->getX() + 1, player_ptr->getY(), DIAMOND);
-				//
+				
 				player_ptr->move(LEFT);
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;
 				//draw();
@@ -455,12 +450,7 @@ void Game::move(int _v)
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = EMPTY;
 				level.draw(player_ptr->getX(), player_ptr->getY(), EMPTY);
 
-				// If there is a stone on the right, stone must be redrawn
-				if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == STONE)
-					level.draw(player_ptr->getX() + 1, player_ptr->getY(), STONE);
-				else if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == DIAMOND)
-					level.draw(player_ptr->getX() + 1, player_ptr->getY(), DIAMOND);
-				//
+				
 				player_ptr->move(DOWN);
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;
 				//draw();
@@ -473,12 +463,7 @@ void Game::move(int _v)
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = EMPTY;
 				level.draw(player_ptr->getX(), player_ptr->getY(), EMPTY);
 
-				// If there is a stone on the right, stone must be redrawn 
-				if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == STONE)
-					level.draw(player_ptr->getX() + 1, player_ptr->getY(), STONE);
-				else if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == DIAMOND)
-					level.draw(player_ptr->getX() + 1, player_ptr->getY(), DIAMOND);
-				//
+				
 				player_ptr->move(UP);
 				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;
 				//draw(); 			
