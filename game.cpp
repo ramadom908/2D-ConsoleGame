@@ -86,6 +86,11 @@ void Game::init(Player* _player_ptr)
 				diaVec.push_back(dia_ptr);
 				level.map[x][y][1] = diaVec.size() - 1;
 			}
+			else if (level.map[x][y][0] == PLAYER)
+			{//initializare player cu coordonatele din in.txt
+				player_ptr->setX(x);
+				player_ptr->setY(y);
+			}
 		}
 
 	//MAX_STONE = i;

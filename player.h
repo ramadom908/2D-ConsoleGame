@@ -17,6 +17,11 @@ public:
 	int getX() { return X; }
 	int getY() { return Y; }
 
+	void setX(int x) { X = x; }
+	void setY(int y) { Y = y; }
+
+
+
 	int getSpeed() { return walk[SPEED]; }
 	int getDelay() { return walk[DELAY]; }
 
