@@ -7,12 +7,9 @@
 class Diamond :public BaseRock
 {
 public:
-
+	
 	void move(Level* _l_ptr, int _v);
-
 	void draw(void);
-
-
 };
 
 #endif

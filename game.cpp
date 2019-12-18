@@ -275,10 +275,9 @@ void Game::stoneGravity(void)
 #define X  stoneVec[i]->getX()
 #define Y  stoneVec[i]->getY()
 
-// Stone + diamante procesiing for gravity
+// Stone  procesiing for gravity
 	for (int i = 0; i < stoneVec.size(); i++)
 	{		
-
 		// is not stone broken yet?
 		if (!stoneVec[i]->getState())
 		{
@@ -482,7 +481,12 @@ void Game::move(int _v)
 			else if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == STONE && level.map[player_ptr->getX() + 2][player_ptr->getY()][0] == EMPTY)
 			{
 				// If push worked, new position should also be inserted in the map index
-				stoneVec[level.map[player_ptr->getX() + 1][player_ptr->getY()][1]]->move(&level, RIGHT);
+				int cont = level.map[player_ptr->getX() + 1][player_ptr->getY()][1];
+				//stoneVec[level.map[player_ptr->getX() + 1][player_ptr->getY()][1]]->move(&level, RIGHT);
+				stoneVec[cont]->move(&level, RIGHT);
+				stoneVec[cont]->stoneDir = 'r';
+				//stoneVec[level.map[player_ptr->getX() + 1][player_ptr->getY()][1]]->stoneDir = 'r';
+				
 			}
 
 		}
@@ -503,7 +507,11 @@ void Game::move(int _v)
 			else if (level.map[player_ptr->getX() - 1][player_ptr->getY()][0] == STONE && level.map[player_ptr->getX() - 2][player_ptr->getY()][0] == EMPTY)
 			{
 				// If push worked, new position should also be inserted in the map index
-				stoneVec[level.map[player_ptr->getX() - 1][player_ptr->getY()][1]]->move(&level, LEFT);
+				int cont = level.map[player_ptr->getX() - 1][player_ptr->getY()][1];
+				//stoneVec[level.map[player_ptr->getX() - 1][player_ptr->getY()][1]]->move(&level, LEFT);
+				stoneVec[cont]->move(&level, LEFT);
+				stoneVec[cont]->stoneDir = 'l'; // solutie ca sa ramana directia de miscare constanta apietrei dupa ce e impinsa de player
+				//stoneVec[level.map[player_ptr->getX() + 1][player_ptr->getY()][1]]->stoneDir = 'l';
 			}
 		}
 		else if (_v == DOWN)

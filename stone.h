@@ -1,50 +1,20 @@
 #ifndef STONE_H
 #define STONE_H
 
+#include "baseRock.h"
 #include "level.h"
 
-class Stone
+class Stone: public BaseRock
 {
 public:
-	Stone(void);
-	Stone(int _speed);
 
-	void move(Level* _l_ptr, int _v);
-	//void gravity(Level* _l_ptr);
-
-	int getX() { return X; }
-	int getY() { return Y; }
-
-	void setX(int _x) { X = _x; }
-	void setY(int _y) { Y = _y; }
-
-	int getSpeed() { return fall[SPEED]; }
-	int getDelay() { return fall[DELAY]; }
-
-	void setDelay(int v) { fall[DELAY] = v; }
-
-	void slowdown();
-
-	int getState() { return destroyed; }
-	void setState(bool _v) { destroyed = _v; }
-
+	void move(Level * _l_ptr, int _v);
 	void draw(void);
-	//void draw(Level* _l_ptr);
 
 
 	int debug;
-
 	char stoneDir = 'd';
 
-
-private:
-	int X;
-	int Y;
-	bool destroyed;
-
-	int fall[2];
-
-	//Level* level_ptr;
 
 };
 
