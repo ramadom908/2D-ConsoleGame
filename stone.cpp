@@ -26,6 +26,8 @@ Stone::Stone(int _speed)
 	destroyed = false;
 }
 
+
+
 void Stone::move(Level* _l_ptr, int _v)
 {
 	if (_v == RIGHT)//TODO: sa redenumesc _v in directie si _l_ptr in level_ptr sau mai bine in ptr_level
@@ -114,27 +116,27 @@ void Stone::move(Level* _l_ptr, int _v)
 	}
 }
 
-void Stone::gravity(Level* _l_ptr)
-{
-	if (getDelay() == 0)
-	{
-		if (_l_ptr->map[X][Y+1][0] == EMPTY)
-		{
-			move(_l_ptr, DOWN);
-		}
-		else if (_l_ptr->map[X-1][Y][0] == EMPTY && _l_ptr->map[X-1][Y+1][0] == EMPTY
-			&& (_l_ptr->map[X][Y+1][0] == STONE || _l_ptr->map[X][Y+1][0] == WALL || _l_ptr->map[X][Y+1][0] == DIAMOND))
-		{
-			move(_l_ptr, LEFT);
-		}
-		else if (_l_ptr->map[X+1][Y][0] == EMPTY && _l_ptr->map[X+1][Y+1][0] == EMPTY
-			&& (_l_ptr->map[X][Y+1][0] == STONE || _l_ptr->map[X][Y+1][0] == WALL || _l_ptr->map[X][Y+1][0] == DIAMOND))
-		{
-			move(_l_ptr, RIGHT);
-		}
-	}
-	slowdown();
-}
+//void Stone::gravity(Level* _l_ptr)
+//{
+//	if (getDelay() == 0)
+//	{
+//		if (_l_ptr->map[X][Y+1][0] == EMPTY)
+//		{
+//			move(_l_ptr, DOWN);
+//		}
+//		else if (_l_ptr->map[X-1][Y][0] == EMPTY && _l_ptr->map[X-1][Y+1][0] == EMPTY
+//			&& (_l_ptr->map[X][Y+1][0] == STONE || _l_ptr->map[X][Y+1][0] == WALL || _l_ptr->map[X][Y+1][0] == DIAMOND))
+//		{
+//			move(_l_ptr, LEFT);
+//		}
+//		else if (_l_ptr->map[X+1][Y][0] == EMPTY && _l_ptr->map[X+1][Y+1][0] == EMPTY
+//			&& (_l_ptr->map[X][Y+1][0] == STONE || _l_ptr->map[X][Y+1][0] == WALL || _l_ptr->map[X][Y+1][0] == DIAMOND))
+//		{
+//			move(_l_ptr, RIGHT);
+//		}
+//	}
+//	slowdown();
+//}
 
 void Stone::slowdown(void)
 {
@@ -144,15 +146,18 @@ void Stone::slowdown(void)
 		fall[DELAY] = fall[SPEED];
 }
 
-void Stone::draw(void)
+void Stone::draw(void)// (int _nrCuloare, int _rock)
 {
+	
 	COORD point;
 	point.X = X;
 	point.Y = Y;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
-	setColor(black, 3); //11
-	std::cout << (char)STONE;
+	setColor(black, 3/*nrCuloare*/); //11
+	std::cout << (char)STONE;//rock
 }
+
+
 
 // Debug
 //void Stone::draw(Level* _l_ptr)

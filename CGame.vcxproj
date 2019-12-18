@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="baseRock.h" />
     <ClInclude Include="detonate.h" />
     <ClInclude Include="diamond.h" />
     <ClInclude Include="enemy.h" />
@@ -126,6 +127,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="baseRock.cpp" />
     <ClCompile Include="console.cpp" />
     <ClCompile Include="detonate.cpp" />
     <ClCompile Include="diamond.cpp" />

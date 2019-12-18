@@ -2,167 +2,17 @@
 #include "diamond.h"
 
 
-Diamond::Diamond(void)
-{
-	X = 0;
-	Y = 0;
-
-	fall[SPEED] = SPEED_STONE;
-	fall[DELAY] = SPEED_STONE;
-
-	destroyed = false;
-
-	color = 254;
-}
-
-Diamond::Diamond(int _speed)
-{
-	X = 5;
-	Y = 4;
-
-	fall[SPEED] = _speed;
-	fall[DELAY] = SPEED_STONE;
-
-	destroyed = false;
-
-	color = 32;
-}
 
 void Diamond::move(Level* _l_ptr, int _v)
 {
-	if (_v == RIGHT)
-	{
-		// Only if right is empty
-		if (_l_ptr->map[X + 1][Y][0] == EMPTY)
-		{
-			// index
-			int i = _l_ptr->map[X][Y][1];
-			_l_ptr->map[X][Y][1] = NULL;
-
-			_l_ptr->map[X][Y][0] = EMPTY;
-			_l_ptr->draw(X, Y, EMPTY);
-			X++;
-			_l_ptr->map[X][Y][0] = DIAMOND;
-			_l_ptr->map[X][Y][1] = i;
-			draw();
-		}
-	}
-	else if (_v == LEFT)
-	{
-		// Only if left is empty
-		if (_l_ptr->map[X - 1][Y][0] == EMPTY)
-		{
-			// index 
-			int i = _l_ptr->map[X][Y][1];
-			_l_ptr->map[X][Y][1] = NULL;
-
-			_l_ptr->map[X][Y][0] = EMPTY;
-			_l_ptr->draw(X, Y, EMPTY);
-			// If there is a stone on the right, stone must be redrawn
-			if (_l_ptr->map[X + 1][Y][0] == STONE)
-				_l_ptr->draw(X + 1, Y, STONE);
-			else if (_l_ptr->map[X + 1][Y][0] == PLAYER)
-				_l_ptr->draw(X + 1, Y, PLAYER);
-			else if (_l_ptr->map[X + 1][Y][0] == DIAMOND)
-				_l_ptr->draw(X + 1, Y, DIAMOND);
-
-			X--;
-			_l_ptr->map[X][Y][0] = DIAMOND;
-			_l_ptr->map[X][Y][1] = i;
-			draw();
-		}
-	}
-	else if (_v == DOWN)
-	{
-		if (_l_ptr->map[X][Y + 1][0] == EMPTY)
-		{
-			// index umkopieren
-			int i = _l_ptr->map[X][Y][1];
-			_l_ptr->map[X][Y][1] = NULL;
-
-			_l_ptr->map[X][Y][0] = EMPTY;
-			_l_ptr->draw(X, Y, EMPTY);
-			// If there is a stone on the right, stone must be redrawn
-			if (_l_ptr->map[X + 1][Y][0] == STONE)
-				_l_ptr->draw(X + 1, Y, STONE);
-			else if (_l_ptr->map[X + 1][Y][0] == PLAYER)
-				_l_ptr->draw(X + 1, Y, PLAYER);
-			else if (_l_ptr->map[X + 1][Y][0] == DIAMOND)
-				_l_ptr->draw(X + 1, Y, DIAMOND);
-
-			Y++;
-			_l_ptr->map[X][Y][0] = DIAMOND;
-			_l_ptr->map[X][Y][1] = i;
-			draw();
-		}
-	}
-	else if (_v == UP)
-	{
-		if (_l_ptr->map[X][Y - 1][0] == EMPTY)
-		{
-			// index umkopieren
-			int i = _l_ptr->map[X][Y][1];
-			_l_ptr->map[X][Y][1] = NULL;
-
-			_l_ptr->map[X][Y][0] = EMPTY;
-			_l_ptr->draw(X, Y, EMPTY);
-			Y--;
-			_l_ptr->map[X][Y][0] = DIAMOND;
-			_l_ptr->map[X][Y][1] = i;
-			draw();
-		}
-	}
-}
-/*
-void Stone::gravity(Level* _l_ptr)
-{
-	if (getDelay() == 0)
-	{
-		if (_l_ptr->map[X][Y+1][0] == EMPTY)
-		{
-			move(_l_ptr, RUNTER);
-		}
-		else if (_l_ptr->map[X-1][Y][0] == EMPTY && _l_ptr->map[X-1][Y+1][0] == EMPTY
-			&& (_l_ptr->map[X][Y+1][0] == STONE || _l_ptr->map[X][Y+1][0] == WALL || _l_ptr->map[X][Y+1][0] == DIAMOND))
-		{
-			move(_l_ptr, LINKS);
-		}
-		else if (_l_ptr->map[X+1][Y][0] == EMPTY && _l_ptr->map[X+1][Y+1][0] == EMPTY
-			&& (_l_ptr->map[X][Y+1][0] == STONE || _l_ptr->map[X][Y+1][0] == WALL || _l_ptr->map[X][Y+1][0] == DIAMOND))
-		{
-			move(_l_ptr, RECHTS);
-		}
-	}
-	slowdown();
-}*/
-
-void Diamond::slowdown(void)
-{
-	if (fall[DELAY] > 0)
-		fall[DELAY]--;
-	else
-		fall[DELAY] = fall[SPEED];
+	moveBase(_l_ptr, _v, DIAMOND);	
 }
 
 void Diamond::draw(void)
-{
-	COORD point;
-	point.X = X;
-	point.Y = Y;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
-	setColor(black, 11); //11
-	std::cout << (char)DIAMOND;
+{	
+	drawbase( 11, DIAMOND);
 }
 
-// Debug
-void Diamond::draw(Level* _l_ptr)
-{
-	COORD point;
-	point.X = X;
-	point.Y = Y;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
-	setColor(black, 4); //15
-	//std::cout << (char)STONE;
-	std::cout << _l_ptr->map[X][Y][1];
-}
+
+
 

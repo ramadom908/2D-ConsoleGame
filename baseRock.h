@@ -1,15 +1,16 @@
-#ifndef STONE_H
-#define STONE_H
+#ifndef BaseRock_H
+#define BaseRock_H
 
 #include "level.h"
 
-class Stone
+class BaseRock
 {
 public:
-	Stone(void);
-	Stone(int _speed);
+	BaseRock(void);
+	BaseRock(int _speed);
 
-	void move(Level* _l_ptr, int _v);
+	virtual void move(Level* _l_ptr, int _v);
+	void moveBase(Level* _l_ptr, int _v, int ROCKNAME);
 	//void gravity(Level* _l_ptr);
 
 	int getX() { return X; }
@@ -28,14 +29,12 @@ public:
 	int getState() { return destroyed; }
 	void setState(bool _v) { destroyed = _v; }
 
-	void draw(void);
+	virtual void draw(void);
+    void drawbase(/*color c,*/ int nrCuloare, int rock);
 	//void draw(Level* _l_ptr);
 
 
-	int debug;
-
-	char stoneDir = 'd';
-
+	int color;
 
 private:
 	int X;
@@ -43,8 +42,6 @@ private:
 	bool destroyed;
 
 	int fall[2];
-
-	//Level* level_ptr;
 
 };
 

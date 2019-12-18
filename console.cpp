@@ -14,8 +14,6 @@
 
 DWORD LoopStartTime;
 
-
-
 // Set cursor position
 void gotoxy(int x, int y)
 {
@@ -26,21 +24,22 @@ void gotoxy(int x, int y)
 }
 
 // Clear image, not used        // functie de clearscreen?  nu e folosita?
-void clrscr()
-{
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	DWORD bufferSize, charsWritten;
 
-	COORD topleft = { 0, 0 };
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
-	GetConsoleScreenBufferInfo(hConsole, &csbi);
-	bufferSize = csbi.dwSize.X * csbi.dwSize.Y;
-	FillConsoleOutputCharacter(hConsole, TEXT(' '), bufferSize, topleft, &charsWritten);
-	GetConsoleScreenBufferInfo(hConsole, &csbi);
-	FillConsoleOutputAttribute(hConsole, csbi.wAttributes, bufferSize, topleft, &charsWritten);
-	SetConsoleCursorPosition(hConsole, topleft);
-}
+//void clrscr()
+//{
+//	CONSOLE_SCREEN_BUFFER_INFO csbi;
+//	DWORD bufferSize, charsWritten;
+//
+//	COORD topleft = { 0, 0 };
+//	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+//
+//	GetConsoleScreenBufferInfo(hConsole, &csbi);
+//	bufferSize = csbi.dwSize.X * csbi.dwSize.Y;
+//	FillConsoleOutputCharacter(hConsole, TEXT(' '), bufferSize, topleft, &charsWritten);
+//	GetConsoleScreenBufferInfo(hConsole, &csbi);
+//	FillConsoleOutputAttribute(hConsole, csbi.wAttributes, bufferSize, topleft, &charsWritten);
+//	SetConsoleCursorPosition(hConsole, topleft);
+//}
 
 
 
@@ -84,6 +83,7 @@ void cursorHide(HANDLE *h)
 
 	SetConsoleCursorInfo(h, &info);
 }
+
 
 int main()
 {//comment
@@ -147,6 +147,8 @@ int main()
 		//player.draw();
 
 		game.update();
+		
+
 
 		//clrscr();
 

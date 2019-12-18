@@ -21,7 +21,12 @@ public:
 
 	void update(void);
 	void debug(void);
-	void gravity(void);
+	void updateGravity(void);
+	void updateExplosion(void);
+	void updatePlayerState(void);
+	void stoneGravity(void);
+	void diamondGravity(void);
+
 	void ai(void);
 	
 	void explosion(int _x, int _y);

@@ -264,24 +264,28 @@ void Game::ai(void)
 	}
 }
 
+
+
+
+
 // Stone Control cred ca ar trebuii rescrisa ca e prea stupida functia... merge prin tot vectorul de stone nenecesar
-void Game::gravity(void)
+void Game::stoneGravity(void)
 {
 	// am pus define-urile astea aici ca sa fie mai usor de citit coordonatele
-	#define X  stoneVec[i]->getX()
-	#define Y  stoneVec[i]->getY()
+#define X  stoneVec[i]->getX()
+#define Y  stoneVec[i]->getY()
 
-	// Stone + diamante procesiing for gravity
+// Stone + diamante procesiing for gravity
 	for (int i = 0; i < stoneVec.size(); i++)
-	{
-		
+	{		
+
 		// is not stone broken yet?
 		if (!stoneVec[i]->getState())
 		{
 			if (level.map[X][Y][0] == FIRE)
 			{
 				stoneVec[i]->setState(true);
-			} 
+			}
 			else
 			{	// stone falls
 				if (stoneVec[i]->getDelay() == 0)
@@ -290,7 +294,7 @@ void Game::gravity(void)
 					{
 						stoneVec[i]->move(&level, DOWN);
 						stoneVec[i]->stoneDir = 'd';// aici resetez directia asta de fiecare data cand o piatra merge in jos
-						
+
 						if (level.map[X][Y + 1][0] == PLAYER)
 						{
 							// Stone collides with player
@@ -304,21 +308,21 @@ void Game::gravity(void)
 							explosion(enemyVec[level.map[X][Y + 1][1]]->getX(), enemyVec[level.map[X][Y + 1][1]]->getY());
 						}
 					}
-					else if (level.map[X - 1][Y][0] == EMPTY && 
-						(level.map[X - 1][Y + 1][0] == EMPTY  ||
-							level.map[X - 1][Y + 1][0] ==STONE )  && stoneVec[i]->stoneDir != 'r'     /*&& (level.map[X + 1][stoneVec[i]->getY()][0] != SAND && level.map[X + 1][stoneVec[i]->getY()][0] != WALL)*/
-						/*&& (level.map[X][stoneVec[i]->getY() + 1][0] == STONE || 
-						level.map[X][stoneVec[i]->getY() + 1][0] == WALL || 
+					else if (level.map[X - 1][Y][0] == EMPTY &&
+						(level.map[X - 1][Y + 1][0] == EMPTY ||
+							level.map[X - 1][Y + 1][0] == STONE) && stoneVec[i]->stoneDir != 'r'     /*&& (level.map[X + 1][stoneVec[i]->getY()][0] != SAND && level.map[X + 1][stoneVec[i]->getY()][0] != WALL)*/
+						/*&& (level.map[X][stoneVec[i]->getY() + 1][0] == STONE ||
+						level.map[X][stoneVec[i]->getY() + 1][0] == WALL ||
 						level.map[X][stoneVec[i]->getY() + 1][0] == DIAMOND)*/)
 					{
-						stoneVec[i]->move(&level, LEFT);	
+						stoneVec[i]->move(&level, LEFT);
 						stoneVec[i]->stoneDir = 'l'; // asta e pus aici temporar ca sa tin sub control directia de alunecat a pietrei 
 					}
-					else if (level.map[X + 1][Y][0] == EMPTY && 
-						(level.map[X + 1][Y + 1][0] == EMPTY || 
-							level.map[X + 1][Y + 1][0] ==STONE) && stoneVec[i]->stoneDir != 'l'
-						/*&& (level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == STONE ||  
-						level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == WALL || 
+					else if (level.map[X + 1][Y][0] == EMPTY &&
+						(level.map[X + 1][Y + 1][0] == EMPTY ||
+							level.map[X + 1][Y + 1][0] == STONE) && stoneVec[i]->stoneDir != 'l'
+						/*&& (level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == STONE ||
+						level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == WALL ||
 						level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == DIAMOND)*/)
 					{
 						stoneVec[i]->move(&level, RIGHT);
@@ -333,7 +337,10 @@ void Game::gravity(void)
 	}
 #undef X
 #undef Y
+}
 
+
+void Game::diamondGravity(void){
 // am pus define-urile astea aici ca sa fie mai usor de citit coordonatele
 #define X  diaVec[i]->getX()
 #define Y  diaVec[i]->getY()
@@ -397,12 +404,17 @@ void Game::gravity(void)
 		}
 		
 	}
-}
 #undef X
 #undef Y
+}
 
-void Game::update(void)
-{
+void Game::updateGravity(void) {
+	stoneGravity();
+	diamondGravity();
+}
+
+void Game::updateExplosion(void) {
+	
 	// if an explosion is ignited
 	if (explVec.size() > 0)
 	{
@@ -414,6 +426,10 @@ void Game::update(void)
 				explVec.erase(explVec.begin() + i);
 		}
 	}
+}
+
+void Game::updatePlayerState(void) {
+
 	//when player burns/explodes, player dies
 	if (level.map[player_ptr->getX()][player_ptr->getY()][0] == FIRE)
 	{
@@ -428,8 +444,18 @@ void Game::update(void)
 		setColor(black, 7);
 		centerText("                    YOU WIN!                    ", 1);
 	}
+}
 
-	gravity();
+
+
+
+
+void Game::update(void)
+{
+	
+	updateExplosion();
+	updatePlayerState();
+	updateGravity();
 	ai();
 
 }
@@ -437,6 +463,7 @@ void Game::update(void)
 // Control player
 void Game::move(int _v)
 {
+
 	// is player dead?
 	if (!player_ptr->getState())
 	{
@@ -457,7 +484,6 @@ void Game::move(int _v)
 				// If push worked, new position should also be inserted in the map index
 				stoneVec[level.map[player_ptr->getX() + 1][player_ptr->getY()][1]]->move(&level, RIGHT);
 			}
-
 
 		}
 		else if (_v == LEFT)
