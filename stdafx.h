@@ -36,13 +36,13 @@ const int MAX_EMEMY = 8;
 #define STONE 111//207//15 //184 'o'
 #define PLAYER 1
 #define ENEMY 2 //186 //2    
-#define DIAMOND 30 //4 'triungi'
+#define DIAMOND 30 //4//30//254 'triungi'
 #define FIRE 0
 
-const int KEY_UP = 0x48;
-const int KEY_DOWN = 0x50;
-const int KEY_LEFT = 0x4b;
-const int KEY_RIGHT = 0x4d;
+const int KEY_UP = 0x48;// 119;// 0x48; sageata sus , restul de mai jos sunt la fel pt sageti 119 este pt w 
+const int KEY_DOWN = 0x50; //115;// 0x50; mai pot sa ma uit in ASCHII si sa pun codurile hex pentru WASD care sunt de exemplu a=  0x61
+const int KEY_LEFT = 0x4b; //97;//0x4b;
+const int KEY_RIGHT = 0x4d;// 100;//0x4d;
 const int KEY_ESCAPE = 0x1b;
 const int KEY_RETURN = 0x0d;
 
