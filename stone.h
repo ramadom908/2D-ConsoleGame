@@ -34,6 +34,9 @@ public:
 
 	int debug;
 
+	char stoneDir = 'd';
+
+
 private:
 	int X;
 	int Y;

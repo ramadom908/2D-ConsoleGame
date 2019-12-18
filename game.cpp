@@ -4,6 +4,9 @@
 //#include "detonate.h"
 #include <iostream>
 
+
+
+
 Game::Game(void)
 {
 	//MAX_STONE = 0;
@@ -264,105 +267,139 @@ void Game::ai(void)
 // Stone Control cred ca ar trebuii rescrisa ca e prea stupida functia... merge prin tot vectorul de stone nenecesar
 void Game::gravity(void)
 {
+	// am pus define-urile astea aici ca sa fie mai usor de citit coordonatele
+	#define X  stoneVec[i]->getX()
+	#define Y  stoneVec[i]->getY()
+
 	// Stone + diamante procesiing for gravity
 	for (int i = 0; i < stoneVec.size(); i++)
 	{
+		
 		// is not stone broken yet?
 		if (!stoneVec[i]->getState())
 		{
-			if (level.map[stoneVec[i]->getX()][stoneVec[i]->getY()][0] == FIRE)
+			if (level.map[X][Y][0] == FIRE)
 			{
 				stoneVec[i]->setState(true);
-			}
+			} 
 			else
 			{	// stone falls
 				if (stoneVec[i]->getDelay() == 0)
 				{
-					if (level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == EMPTY)
+					if (level.map[X][Y + 1][0] == EMPTY)
 					{
 						stoneVec[i]->move(&level, DOWN);
-						if (level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == PLAYER)
+						stoneVec[i]->stoneDir = 'd';// aici resetez directia asta de fiecare data cand o piatra merge in jos
+						
+						if (level.map[X][Y + 1][0] == PLAYER)
 						{
 							// Stone collides with player
 							//PlaySound(TEXT("explosion-02.wav"), NULL, SND_ASYNC);
 							explosion(player_ptr->getX(), player_ptr->getY());
 						}
-						else if (level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == ENEMY)
+						else if (level.map[X][Y + 1][0] == ENEMY)
 						{
 							//std::cout << "Stone collides with Enemy!";
 							//PlaySound(TEXT("explosion-02.wav"), NULL, SND_ASYNC);
-							explosion(enemyVec[level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][1]]->getX(), enemyVec[level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][1]]->getY());
+							explosion(enemyVec[level.map[X][Y + 1][1]]->getX(), enemyVec[level.map[X][Y + 1][1]]->getY());
 						}
 					}
-					else if (level.map[stoneVec[i]->getX() - 1][stoneVec[i]->getY()][0] == EMPTY && level.map[stoneVec[i]->getX() - 1][stoneVec[i]->getY() + 1][0] == EMPTY
-						&& (level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == STONE || level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == WALL || level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == DIAMOND))
+					else if (level.map[X - 1][Y][0] == EMPTY && 
+						(level.map[X - 1][Y + 1][0] == EMPTY  ||
+							level.map[X - 1][Y + 1][0] ==STONE )  && stoneVec[i]->stoneDir != 'r'     /*&& (level.map[X + 1][stoneVec[i]->getY()][0] != SAND && level.map[X + 1][stoneVec[i]->getY()][0] != WALL)*/
+						/*&& (level.map[X][stoneVec[i]->getY() + 1][0] == STONE || 
+						level.map[X][stoneVec[i]->getY() + 1][0] == WALL || 
+						level.map[X][stoneVec[i]->getY() + 1][0] == DIAMOND)*/)
 					{
-						stoneVec[i]->move(&level, LEFT);
+						stoneVec[i]->move(&level, LEFT);	
+						stoneVec[i]->stoneDir = 'l'; // asta e pus aici temporar ca sa tin sub control directia de alunecat a pietrei 
 					}
-					else if (level.map[stoneVec[i]->getX() + 1][stoneVec[i]->getY()][0] == EMPTY && level.map[stoneVec[i]->getX() + 1][stoneVec[i]->getY() + 1][0] == EMPTY
-						&& (level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == STONE || level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == WALL || level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == DIAMOND))
+					else if (level.map[X + 1][Y][0] == EMPTY && 
+						(level.map[X + 1][Y + 1][0] == EMPTY || 
+							level.map[X + 1][Y + 1][0] ==STONE) && stoneVec[i]->stoneDir != 'l'
+						/*&& (level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == STONE ||  
+						level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == WALL || 
+						level.map[stoneVec[i]->getX()][stoneVec[i]->getY() + 1][0] == DIAMOND)*/)
 					{
 						stoneVec[i]->move(&level, RIGHT);
+						stoneVec[i]->stoneDir = 'r';
 					}
 				}
 				stoneVec[i]->slowdown();
 			}
 		}
+
+
+	}
+#undef X
+#undef Y
+
+// am pus define-urile astea aici ca sa fie mai usor de citit coordonatele
+#define X  diaVec[i]->getX()
+#define Y  diaVec[i]->getY()
+
+	for (int i = 0; i < diaVec.size(); i++){
 		///////////////////////////////////////////////
 		// Diamond
 		// Diamond is not broken yet?
 		// if i< diaVect.size... procesam si diamentele in acelasi for
-		if (diaVec.size() > i)
+
+		
+		if (!diaVec[i]->getState())
 		{
-			if (!diaVec[i]->getState())
+			if (level.map[X][Y][0] == FIRE)
 			{
-				if (level.map[diaVec[i]->getX()][diaVec[i]->getY()][0] == FIRE)
+				diaVec[i]->setState(true);
+			}
+			else if (level.map[X][Y][0] == PLAYER)
+			{
+				int abc = level.map[X][Y][1]; // asta e pus temporar ca sa-l compar cu i din diaVec[i]
+				diaVec[i]->setState(true);
+				curr_diamond++;
+				setColor(black, 7);
+				centerText(1, " Lives", diaVec.size() - curr_diamond, " Diamonds", 49, " Time", 109, " Points", 1);
+			}
+			else
+			{	// Diamond falls
+				if (diaVec[i]->getDelay() == 0)
 				{
-					diaVec[i]->setState(true);
-				}
-				else if (level.map[diaVec[i]->getX()][diaVec[i]->getY()][0] == PLAYER)
-				{
-					diaVec[i]->setState(true);
-					curr_diamond++;
-					setColor(black, 7);
-					centerText(1, " Lives", diaVec.size() - curr_diamond, " Diamonds", 49, " Time", 109, " Points", 1);
-				}
-				else
-				{	// Diamond falls
-					if (diaVec[i]->getDelay() == 0)
+					if (level.map[X][Y + 1][0] == EMPTY)
 					{
-						if (level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == EMPTY)
+						diaVec[i]->move(&level, DOWN);
+						//X = diaVec[i]->getX();//update  X after move
+						//Y = diaVec[i]->getY();//update  Y after move
+
+						if (level.map[X][Y + 1][0] == PLAYER )
 						{
-							diaVec[i]->move(&level, DOWN);
-							if (level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == PLAYER)
-							{
-								//PlaySound(TEXT("explosion-02.wav"), NULL, SND_ASYNC);
-								explosion(player_ptr->getX(), player_ptr->getY());// TODO: de verificat ce-i aici daca chiar declanseaza explozie
-							}
-							else if (level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == ENEMY)
-							{
-								//std::cout << "Stone collides with Enemy!";
-								//PlaySound(TEXT("explosion-02.wav"), NULL, SND_ASYNC);
-								explosion(enemyVec[level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][1]]->getX(), enemyVec[level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][1]]->getY());
-							}
+							//PlaySound(TEXT("explosion-02.wav"), NULL, SND_ASYNC);
+							explosion(player_ptr->getX(), player_ptr->getY());// TODO: de verificat ce-i aici daca chiar declanseaza explozie
 						}
-						else if (level.map[diaVec[i]->getX() - 1][diaVec[i]->getY()][0] == EMPTY && level.map[diaVec[i]->getX() - 1][diaVec[i]->getY() + 1][0] == EMPTY
-							&& (level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == STONE || level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == WALL || level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == DIAMOND))
+						else if (level.map[X][Y + 1][0] == ENEMY)
 						{
-							diaVec[i]->move(&level, LEFT);
-						}
-						else if (level.map[diaVec[i]->getX() + 1][diaVec[i]->getY()][0] == EMPTY && level.map[diaVec[i]->getX() + 1][diaVec[i]->getY() + 1][0] == EMPTY
-							&& (level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == STONE || level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == WALL || level.map[diaVec[i]->getX()][diaVec[i]->getY() + 1][0] == DIAMOND))
-						{
-							diaVec[i]->move(&level, RIGHT);
+							//std::cout << "Stone collides with Enemy!";
+							//PlaySound(TEXT("explosion-02.wav"), NULL, SND_ASYNC);
+							explosion(enemyVec[level.map[X][Y + 1][1]]->getX(), enemyVec[level.map[X][Y + 1][1]]->getY());
 						}
 					}
-					diaVec[i]->slowdown();
+					else if (level.map[X - 1][Y][0] == EMPTY && level.map[X - 1][Y + 1][0] == EMPTY
+						/*&& (level.map[X][Y + 1][0] == STONE || level.map[X][Y + 1][0] == WALL || level.map[X][Y + 1][0] == DIAMOND)*/)
+					{
+						diaVec[i]->move(&level, LEFT);					
+					}
+					else if (level.map[X + 1][Y][0] == EMPTY && level.map[X + 1][Y + 1][0] == EMPTY
+						/*&& (level.map[X][Y + 1][0] == STONE || level.map[X][Y + 1][0] == WALL || level.map[X][Y + 1][0] == DIAMOND)*/)
+					{
+						diaVec[i]->move(&level, RIGHT);
+					}
 				}
+				diaVec[i]->slowdown();
 			}
 		}
+		
 	}
 }
+#undef X
+#undef Y
 
 void Game::update(void)
 {

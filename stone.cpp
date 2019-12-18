@@ -57,12 +57,12 @@ void Stone::move(Level* _l_ptr, int _v)
 			_l_ptr->map[X][Y][0] = EMPTY;
 			_l_ptr->draw(X, Y, EMPTY);
 			// If there is a stone on the right, stone must be redrawn
-			if (_l_ptr->map[X + 1][Y][0] == STONE)
+			/*if (_l_ptr->map[X + 1][Y][0] == STONE)
 				_l_ptr->draw(X + 1, Y, STONE);
 			else if (_l_ptr->map[X + 1][Y][0] == PLAYER)
 				_l_ptr->draw(X + 1, Y, PLAYER);
 			else if (_l_ptr->map[X + 1][Y][0] == DIAMOND)
-				_l_ptr->draw(X + 1, Y, DIAMOND);
+				_l_ptr->draw(X + 1, Y, DIAMOND);*/
 			X--;
 			_l_ptr->map[X][Y][0] = STONE;
 			_l_ptr->map[X][Y][1] = i;
@@ -80,14 +80,14 @@ void Stone::move(Level* _l_ptr, int _v)
 			_l_ptr->map[X][Y][0] = EMPTY;
 			_l_ptr->draw(X, Y, EMPTY);
 			//If there is a stone on the right, stone must be redrawn
-			if (_l_ptr->map[X + 1][Y][0] == STONE)
+			/*if (_l_ptr->map[X + 1][Y][0] == STONE)
 				_l_ptr->draw(X + 1, Y, STONE);
 			else if (_l_ptr->map[X + 1][Y][0] == PLAYER)
 				_l_ptr->draw(X + 1, Y, PLAYER);
 			else if (_l_ptr->map[X + 1][Y][0] == DIAMOND)
-				_l_ptr->draw(X + 1, Y, DIAMOND);
+				_l_ptr->draw(X + 1, Y, DIAMOND);*/
 
-			if (_l_ptr->map[X][Y + 2][0] != EMPTY)
+			//if (_l_ptr->map[X][Y + 2][0] != EMPTY)    /// aici e posibil sa scot comentariul daca o sa am sunet...
 				//PlaySound(TEXT("stone.wav"), NULL, SND_ASYNC);
 
 			Y++;
