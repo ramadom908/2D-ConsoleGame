@@ -17,7 +17,7 @@ public:
 
 	void init(Player* _p_ptr);
 
-	void move(int _v);
+	void move(int direction);
 
 	void update(void);
 	void debug(void);

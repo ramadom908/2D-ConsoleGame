@@ -65,12 +65,12 @@ void BaseRock::moveBase(Level* _l_ptr, int _v, int ROCKNAME)
 			_l_ptr->map[X][Y][0] = EMPTY;
 			_l_ptr->draw(X, Y, EMPTY);
 			// If there is a stone on the right, stone must be redrawn
-			if (_l_ptr->map[X + 1][Y][0] == STONE)
+			/*if (_l_ptr->map[X + 1][Y][0] == STONE)
 				_l_ptr->draw(X + 1, Y, STONE);
 			else if (_l_ptr->map[X + 1][Y][0] == PLAYER)
 				_l_ptr->draw(X + 1, Y, PLAYER);
 			else if (_l_ptr->map[X + 1][Y][0] == ROCKNAME)
-				_l_ptr->draw(X + 1, Y, ROCKNAME);
+				_l_ptr->draw(X + 1, Y, ROCKNAME);*/
 
 			X--;
 			_l_ptr->map[X][Y][0] = ROCKNAME;
@@ -89,12 +89,12 @@ void BaseRock::moveBase(Level* _l_ptr, int _v, int ROCKNAME)
 			_l_ptr->map[X][Y][0] = EMPTY;
 			_l_ptr->draw(X, Y, EMPTY);
 			// If there is a stone on the right, stone must be redrawn
-			if (_l_ptr->map[X + 1][Y][0] == STONE)
+			/*if (_l_ptr->map[X + 1][Y][0] == STONE)
 				_l_ptr->draw(X + 1, Y, STONE);
 			else if (_l_ptr->map[X + 1][Y][0] == PLAYER)
 				_l_ptr->draw(X + 1, Y, PLAYER);
 			else if (_l_ptr->map[X + 1][Y][0] == ROCKNAME)
-				_l_ptr->draw(X + 1, Y, ROCKNAME);
+				_l_ptr->draw(X + 1, Y, ROCKNAME);*/
 
 			Y++;
 			_l_ptr->map[X][Y][0] = ROCKNAME;
@@ -143,7 +143,7 @@ void BaseRock::slowdown(void)
 }
 
 // setColor(black, 11);
-void BaseRock::drawbase( int nrCuloare, int ROCKNAME)
+void BaseRock::drawbase(colorEnum color, int nrCuloare, int ROCKNAME)
 {
 	COORD point;
 	point.X = X;

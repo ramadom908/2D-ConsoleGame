@@ -460,28 +460,30 @@ void Game::update(void)
 }
 
 // Control player
-void Game::move(int _v)
+void Game::move(int direction)
 {
 
+#define X  player_ptr->getX()
+#define Y  player_ptr->getY()
 	// is player dead?
 	if (!player_ptr->getState())
 	{
-		if (_v == RIGHT)
+		if (direction == RIGHT)
 		{
 			// Only if right is Sand, Diamond or Empty
-			if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == SAND || level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == EMPTY || level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == DIAMOND)
+			if (level.map[X + 1][Y][0] == SAND || level.map[X + 1][Y][0] == EMPTY || level.map[X + 1][Y][0] == DIAMOND)
 			{
-				level.map[player_ptr->getX()][player_ptr->getY()][0] = EMPTY;// goleste map-ul 
-				level.draw(player_ptr->getX(), player_ptr->getY(), EMPTY);	 // deseneaza ce-i in map adica gol
+				level.map[X][Y][0] = EMPTY;// goleste map-ul 
+				level.draw(X, Y, EMPTY);	 // deseneaza ce-i in map adica gol
 
 				player_ptr->move(RIGHT);// mut player pe noul loc si desenez pe ecran
-				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;// bag player in map
+				level.map[X][Y][0] = PLAYER;// bag player in map
 			}
 			// Player pushes stone
-			else if (level.map[player_ptr->getX() + 1][player_ptr->getY()][0] == STONE && level.map[player_ptr->getX() + 2][player_ptr->getY()][0] == EMPTY)
+			else if (level.map[X + 1][Y][0] == STONE && level.map[X + 2][Y][0] == EMPTY)
 			{
 				// If push worked, new position should also be inserted in the map index
-				int cont = level.map[player_ptr->getX() + 1][player_ptr->getY()][1];
+				int cont = level.map[X + 1][Y][1];
 				//stoneVec[level.map[player_ptr->getX() + 1][player_ptr->getY()][1]]->move(&level, RIGHT);
 				stoneVec[cont]->move(&level, RIGHT);
 				stoneVec[cont]->stoneDir = 'r';
@@ -490,57 +492,60 @@ void Game::move(int _v)
 			}
 
 		}
-		else if (_v == LEFT)
+		else if (direction == LEFT)
 		{
 			// Only if left is sand or empty
-			if (level.map[player_ptr->getX() - 1][player_ptr->getY()][0] == SAND || level.map[player_ptr->getX() - 1][player_ptr->getY()][0] == EMPTY || level.map[player_ptr->getX() - 1][player_ptr->getY()][0] == DIAMOND)
+			if (level.map[X - 1][Y][0] == SAND || level.map[X - 1][Y][0] == EMPTY || level.map[X - 1][Y][0] == DIAMOND)
 			{
-				level.map[player_ptr->getX()][player_ptr->getY()][0] = EMPTY;
-				level.draw(player_ptr->getX(), player_ptr->getY(), EMPTY);
+				level.map[X][Y][0] = EMPTY;
+				level.draw(X, Y, EMPTY);
 
 				
 				player_ptr->move(LEFT);
-				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;
+				level.map[X][Y][0] = PLAYER;
 				//draw();
 			}
 			// Player pushes stone left
-			else if (level.map[player_ptr->getX() - 1][player_ptr->getY()][0] == STONE && level.map[player_ptr->getX() - 2][player_ptr->getY()][0] == EMPTY)
+			else if (level.map[X - 1][Y][0] == STONE && level.map[X - 2][Y][0] == EMPTY)
 			{
 				// If push worked, new position should also be inserted in the map index
-				int cont = level.map[player_ptr->getX() - 1][player_ptr->getY()][1];
+				int cont = level.map[X - 1][Y][1];
 				//stoneVec[level.map[player_ptr->getX() - 1][player_ptr->getY()][1]]->move(&level, LEFT);
 				stoneVec[cont]->move(&level, LEFT);
 				stoneVec[cont]->stoneDir = 'l'; // solutie ca sa ramana directia de miscare constanta apietrei dupa ce e impinsa de player
 				//stoneVec[level.map[player_ptr->getX() + 1][player_ptr->getY()][1]]->stoneDir = 'l';
 			}
 		}
-		else if (_v == DOWN)
+		else if (direction == DOWN)
 		{
-			if (level.map[player_ptr->getX()][player_ptr->getY() + 1][0] == SAND || level.map[player_ptr->getX()][player_ptr->getY() + 1][0] == EMPTY || level.map[player_ptr->getX()][player_ptr->getY() + 1][0] == DIAMOND)
+			if (level.map[X][Y + 1][0] == SAND || level.map[X][Y + 1][0] == EMPTY || level.map[X][Y + 1][0] == DIAMOND)
 			{
-				level.map[player_ptr->getX()][player_ptr->getY()][0] = EMPTY;
-				level.draw(player_ptr->getX(), player_ptr->getY(), EMPTY);
+				level.map[X][Y][0] = EMPTY;
+				level.draw(X, Y, EMPTY);
 
 				
 				player_ptr->move(DOWN);
-				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;
+				level.map[X][Y][0] = PLAYER;
 				//draw();
 			}
 		}
-		else if (_v == UP)
+		else if (direction == UP)
 		{
-			if (level.map[player_ptr->getX()][player_ptr->getY() - 1][0] == SAND || level.map[player_ptr->getX()][player_ptr->getY() - 1][0] == EMPTY || level.map[player_ptr->getX()][player_ptr->getY() - 1][0] == DIAMOND)
+			if (level.map[X][Y - 1][0] == SAND || level.map[X][Y - 1][0] == EMPTY || level.map[X][Y - 1][0] == DIAMOND)
 			{
-				level.map[player_ptr->getX()][player_ptr->getY()][0] = EMPTY;
-				level.draw(player_ptr->getX(), player_ptr->getY(), EMPTY);
+				level.map[X][Y][0] = EMPTY;
+				level.draw(X, Y, EMPTY);
 
 				
 				player_ptr->move(UP);
-				level.map[player_ptr->getX()][player_ptr->getY()][0] = PLAYER;
+				level.map[X][Y][0] = PLAYER;
 				//draw(); 			
 			}
 		}
 	}
+
+#undef X
+#undef Y
 }
 
 

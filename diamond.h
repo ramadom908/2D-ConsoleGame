@@ -10,6 +10,8 @@ public:
 	
 	void move(Level* _l_ptr, int _v);
 	void draw(void);
+
+	int color;
 };
 
 #endif

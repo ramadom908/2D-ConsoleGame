@@ -30,7 +30,7 @@ public:
 	void setState(bool _v) { destroyed = _v; }
 
 	virtual void draw(void);
-    void drawbase(/*color c,*/ int nrCuloare, int rock);
+    void drawbase(colorEnum color, int nrCuloare, int rock);
 	//void draw(Level* _l_ptr);
 
 

@@ -72,7 +72,7 @@ void setColor(int colorBack, int colorFore);
 
 
 
-enum color
+enum colorEnum
 {
 	black,
 	darkblue,

@@ -10,7 +10,7 @@ void Diamond::move(Level* _l_ptr, int _v)
 
 void Diamond::draw(void)
 {	
-	drawbase( 11, DIAMOND);
+	drawbase(black, 11, DIAMOND);
 }
 
 

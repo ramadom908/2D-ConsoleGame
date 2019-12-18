@@ -17,6 +17,6 @@ void Stone::move(Level* _l_ptr, int _v)
 
 void Stone::draw(void)
 {
-	drawbase(3, STONE);
+	drawbase(black,3, STONE);
 }
 
