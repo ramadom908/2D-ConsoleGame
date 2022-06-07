@@ -145,7 +145,9 @@ void Player::slowdown(void)
 }
 
 void Player::draw(void)
-{   //TODO:TASK sa vad ce-i cu COORD asta de mai jos
+{   //COORD
+	//Defines the coordinates of a character cell in a console screen buffer. 
+	//The origin of the coordinate system (0,0) is at the top, left cell of the buffer.
 	COORD point;
 	point.X = X;
 	point.Y = Y;

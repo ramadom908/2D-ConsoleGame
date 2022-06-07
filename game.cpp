@@ -64,6 +64,7 @@ void Game::loadObjects(Level *level_ptr, Player * player_ptr) {
 			}											 // aici setez pozitia asta cu dimensiunea vectorului de
 														 //pietre -1 inca nu stiu de ce..., probabil pt parcurgere de la 0 in vectorul de pietre si sa le tin cont unde sunt
 				//TODO: TASK sa vad de ce stetez ma sus cu dimensiune -1 si nu cu dimensiune
+				// cel mai probabil ca sa incep de la 0 cu parcurgerea pe undeva
 			else if (level_ptr->map[x][y][0] == ENEMY)
 			{// la fel ca la stone
 				enemy_ptr = new Enemy;
@@ -120,33 +121,37 @@ void Game::init(Player* _player_ptr)
 // Control Enemy
 void Game::ai(void)
 {
+
+#define X  enemyVec[i]->getX()
+#define Y  enemyVec[i]->getY()
+
 	for (int i = 0; i < enemyVec.size(); i++)
 	{
 		// Enemy is not broken yet?
 		if (!enemyVec[i]->getState())
 		{   // if left, over, right or under player, enemy explodes
-			if (level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] == PLAYER ||
-				level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] == PLAYER ||
-				level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] == PLAYER ||
-				level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] == PLAYER)
+			if (level.map[X - 1][Y][0] == PLAYER ||
+				level.map[X][Y - 1][0] == PLAYER ||
+				level.map[X + 1][Y][0] == PLAYER ||
+				level.map[X][Y + 1][0] == PLAYER)
 			{
 				//PlaySound(TEXT("explosion-02.wav"), NULL, SND_ASYNC);
 				enemyVec[i]->setState(true);
-				explosion(enemyVec[i]->getX(), enemyVec[i]->getY());
+				explosion(X, Y);
 			}
 			// if Enemy burns, enemy explodes enemy, enemy explodes u. dies
-			else if (level.map[enemyVec[i]->getX()][enemyVec[i]->getY()][0] == FIRE)
+			else if (level.map[X][Y][0] == FIRE)
 			{
 				//PlaySound(TEXT("explosion-02.wav"), NULL, SND_ASYNC);
 				enemyVec[i]->setState(true);
-				explosion(enemyVec[i]->getX(), enemyVec[i]->getY());
+				explosion(X, Y);
 			}
 			// if there is a stone over Enemy, Enemy explodes u. dies
-			else if (level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] == STONE)
+			else if (level.map[X][Y - 1][0] == STONE)
 			{
 				//PlaySound(TEXT("explosion-02.wav"), NULL, SND_ASYNC);
 				enemyVec[i]->setState(true);
-				explosion(enemyVec[i]->getX(), enemyVec[i]->getY());
+				explosion(X, Y);
 			}
 			else
 			{
@@ -154,24 +159,24 @@ void Game::ai(void)
 				{
 					if (enemyVec[i]->getWay() == RIGHT)
 					{
-						if (level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] != EMPTY && level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] == EMPTY)
+						if (level.map[X][Y - 1][0] != EMPTY && level.map[X + 1][Y][0] == EMPTY)
 						{
 							enemyVec[i]->setWay(RIGHT);
 							enemyVec[i]->move(&level, RIGHT);
 						}
-						else if (level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY() - 1][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] == EMPTY)
+						else if (level.map[X - 1][Y - 1][0] != EMPTY && level.map[X][Y - 1][0] == EMPTY)
 						{
 							enemyVec[i]->setWay(UP);
 							enemyVec[i]->move(&level, UP);
 						}
-						else if (level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] != EMPTY && level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] != EMPTY
-							&& level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] == EMPTY)
+						else if (level.map[X][Y - 1][0] != EMPTY && level.map[X + 1][Y][0] != EMPTY
+							&& level.map[X][Y + 1][0] == EMPTY)
 						{
 							enemyVec[i]->setWay(DOWN);
 							enemyVec[i]->move(&level, DOWN);
 						}
-						else if (level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] != EMPTY && level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] != EMPTY
-							&& level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] != EMPTY && level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] == EMPTY)
+						else if (level.map[X][Y - 1][0] != EMPTY && level.map[X + 1][Y][0] != EMPTY
+							&& level.map[X][Y + 1][0] != EMPTY && level.map[X - 1][Y][0] == EMPTY)
 						{
 							enemyVec[i]->setWay(LEFT);
 							enemyVec[i]->move(&level, LEFT);
@@ -180,24 +185,24 @@ void Game::ai(void)
 					}
 					else if (enemyVec[i]->getWay() == DOWN)
 					{
-						if (level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] == EMPTY)
+						if (level.map[X + 1][Y][0] != EMPTY && level.map[X][Y + 1][0] == EMPTY)
 						{
 							enemyVec[i]->setWay(DOWN);
 							enemyVec[i]->move(&level, DOWN);
 						}
-						else if (level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY() - 1][0] != EMPTY && level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] == EMPTY)
+						else if (level.map[X + 1][Y - 1][0] != EMPTY && level.map[X + 1][Y][0] == EMPTY)
 						{
 							enemyVec[i]->setWay(RIGHT);
 							enemyVec[i]->move(&level, RIGHT);
 						}
-						else if (level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] != EMPTY
-							&& level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] == EMPTY)
+						else if (level.map[X + 1][Y][0] != EMPTY && level.map[X][Y + 1][0] != EMPTY
+							&& level.map[X - 1][Y][0] == EMPTY)
 						{
 							enemyVec[i]->setWay(LEFT);
 							enemyVec[i]->move(&level, LEFT);
 						}
-						else if (level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] != EMPTY
-							&& level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] == EMPTY)
+						else if (level.map[X + 1][Y][0] != EMPTY && level.map[X][Y + 1][0] != EMPTY
+							&& level.map[X - 1][Y][0] != EMPTY && level.map[X][Y - 1][0] == EMPTY)
 						{
 							enemyVec[i]->setWay(UP);
 							enemyVec[i]->move(&level, UP);
@@ -206,24 +211,24 @@ void Game::ai(void)
 					}
 					else if (enemyVec[i]->getWay() == LEFT)
 					{
-						if (level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] != EMPTY && level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] == EMPTY)
+						if (level.map[X][Y + 1][0] != EMPTY && level.map[X - 1][Y][0] == EMPTY)
 						{
 							enemyVec[i]->setWay(LEFT);
 							enemyVec[i]->move(&level, LEFT);
 						}
-						else if (level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY() + 1][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] == EMPTY)
+						else if (level.map[X + 1][Y + 1][0] != EMPTY && level.map[X][Y + 1][0] == EMPTY)
 						{
 							enemyVec[i]->setWay(DOWN);
 							enemyVec[i]->move(&level, DOWN);
 						}
-						else if (level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] != EMPTY && level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] != EMPTY
-							&& level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] == EMPTY)
+						else if (level.map[X][Y + 1][0] != EMPTY && level.map[X - 1][Y][0] != EMPTY
+							&& level.map[X][Y - 1][0] == EMPTY)
 						{
 							enemyVec[i]->setWay(UP);
 							enemyVec[i]->move(&level, UP);
 						}
-						else if (level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] != EMPTY && level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] != EMPTY
-							&& level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] != EMPTY && level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] == EMPTY)
+						else if (level.map[X][Y + 1][0] != EMPTY && level.map[X - 1][Y][0] != EMPTY
+							&& level.map[X][Y - 1][0] != EMPTY && level.map[X + 1][Y][0] == EMPTY)
 						{
 							enemyVec[i]->setWay(RIGHT);
 							enemyVec[i]->move(&level, RIGHT);
@@ -232,24 +237,24 @@ void Game::ai(void)
 					}
 					else if (enemyVec[i]->getWay() == UP)
 					{
-						if (level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] == EMPTY)
+						if (level.map[X - 1][Y][0] != EMPTY && level.map[X][Y - 1][0] == EMPTY)
 						{
 							enemyVec[i]->setWay(UP);
 							enemyVec[i]->move(&level, UP);
 						}
-						else if (level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY() + 1][0] != EMPTY && level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] == EMPTY)
+						else if (level.map[X - 1][Y + 1][0] != EMPTY && level.map[X - 1][Y][0] == EMPTY)
 						{
 							enemyVec[i]->setWay(LEFT);
 							enemyVec[i]->move(&level, LEFT);
 						}
-						else if (level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] != EMPTY
-							&& level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] == EMPTY)
+						else if (level.map[X - 1][Y][0] != EMPTY && level.map[X][Y - 1][0] != EMPTY
+							&& level.map[X + 1][Y][0] == EMPTY)
 						{
 							enemyVec[i]->setWay(RIGHT);
 							enemyVec[i]->move(&level, RIGHT);
 						}
-						else if (level.map[enemyVec[i]->getX() - 1][enemyVec[i]->getY()][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() - 1][0] != EMPTY
-							&& level.map[enemyVec[i]->getX() + 1][enemyVec[i]->getY()][0] != EMPTY && level.map[enemyVec[i]->getX()][enemyVec[i]->getY() + 1][0] == EMPTY)
+						else if (level.map[X - 1][Y][0] != EMPTY && level.map[X][Y - 1][0] != EMPTY
+							&& level.map[X + 1][Y][0] != EMPTY && level.map[X][Y + 1][0] == EMPTY)
 						{
 							enemyVec[i]->setWay(DOWN);
 							enemyVec[i]->move(&level, DOWN);
@@ -262,6 +267,8 @@ void Game::ai(void)
 			}
 		}
 	}
+#undef X
+#undef Y
 }
 
 
@@ -494,7 +501,7 @@ void Game::move(int direction)
 		}
 		else if (direction == LEFT)
 		{
-			// Only if left is sand or empty
+			// Only if left is sand or empty or dimond
 			if (level.map[X - 1][Y][0] == SAND || level.map[X - 1][Y][0] == EMPTY || level.map[X - 1][Y][0] == DIAMOND)
 			{
 				level.map[X][Y][0] = EMPTY;

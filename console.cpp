@@ -9,8 +9,9 @@
 #include "game.h"
 
 
-
-
+//Right click on console window
+//go to Properties->Font->Font-> Select: Raster Fonts
+//go to Properties->Font->Size-> Select: 10x 18
 
 DWORD LoopStartTime;
 
@@ -87,7 +88,7 @@ void cursorHide(HANDLE *h)
 
 int main()
 {//comment
-	HANDLE hwnd;//TODO:TASK sa vad ce face handle
+	HANDLE hwnd;//TODO:TASK sa vad ce face handle // este un void pointer 
 	hwnd = GetStdHandle(STD_OUTPUT_HANDLE);
 	cursorHide(&hwnd);
 

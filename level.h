@@ -34,6 +34,8 @@ public:
 	int debug;
 
 private:
+	//Defines the coordinates of a character cell in a console screen buffer. 
+	//The origin of the coordinate system (0,0) is at the top, left cell of the buffer.
 	COORD point;
 	
 };
